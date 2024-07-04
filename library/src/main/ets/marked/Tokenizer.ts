@@ -1,16 +1,12 @@
 import { _defaults } from './defaults';
-import {
-  rtrim,
-  splitCells,
-  escape,
-  findClosingBracket
-} from './helpers';
+import { rtrim, splitCells, escape, findClosingBracket } from './helpers';
 import type { Rules } from './rules';
 import type { _Lexer } from './Lexer';
 import type { Links, Tokens, Token } from './Tokens';
 import type { MarkedOptions } from './MarkedOptions';
 
-function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer): Tokens.Link | Tokens.Image {
+function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string,
+  lexer: _Lexer): Tokens.Link | Tokens.Image {
   const href = link.href;
   const title = link.title ? escape(link.title) : null;
   const text = cap[1].replace(/\\([\[\]])/g, '$1');
@@ -89,7 +85,7 @@ export class _Tokenizer {
 
   code(src: string): Tokens.Code | undefined {
     const cap = this.rules.block.code.exec(src);
-    if (cap) {
+    if (cap && cap[1]) {
       const text = cap[0].replace(/^ {1,4}/gm, '');
       return {
         type: 'code',
@@ -98,6 +94,17 @@ export class _Tokenizer {
         text: !this.options.pedantic
           ? rtrim(text, '\n')
           : text
+      };
+    } else if (cap && cap[3]) {
+      const sub = /^ {0,3}([`~]{3})(.*?)\n([\s\S]*?)\1/.exec(cap[0])
+      return {
+        type: 'code',
+        raw: cap[0],
+        codeBlockStyle: 'indented',
+        text: !this.options.pedantic
+          ? rtrim(sub[3], '\n')
+          : sub[3],
+        lang: sub[2]
       };
     }
   }
@@ -301,8 +308,10 @@ export class _Tokenizer {
         }
 
         if (!endEarly) {
-          const nextBulletRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ \t][^\\n]*)?(?:\\n|$))`);
-          const hrRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`);
+          const nextBulletRegex =
+            new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ \t][^\\n]*)?(?:\\n|$))`);
+          const hrRegex =
+            new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`);
           const fencesBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:\`\`\`|~~~)`);
           const headingBeginRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}#`);
 
@@ -453,7 +462,8 @@ export class _Tokenizer {
     if (cap) {
       const tag = cap[1].toLowerCase().replace(/\s+/g, ' ');
       const href = cap[2] ? cap[2].replace(/^<(.*)>$/, '$1').replace(this.rules.inline.anyPunctuation, '$1') : '';
-      const title = cap[3] ? cap[3].substring(1, cap[3].length - 1).replace(this.rules.inline.anyPunctuation, '$1') : cap[3];
+      const title =
+        cap[3] ? cap[3].substring(1, cap[3].length - 1).replace(this.rules.inline.anyPunctuation, '$1') : cap[3];
       return {
         type: 'def',
         tag,
@@ -679,10 +689,14 @@ export class _Tokenizer {
 
   emStrong(src: string, maskedSrc: string, prevChar = ''): Tokens.Em | Tokens.Strong | undefined {
     let match = this.rules.inline.emStrongLDelim.exec(src);
-    if (!match) return;
+    if (!match) {
+      return;
+    }
 
     // _ can't be between two alphanumerics. \p{L}\p{N} includes non-english alphabet/numbers as well
-    if (match[3] && prevChar.match(/[\p{L}\p{N}]/u)) return;
+    if (match[3] && prevChar.match(/[\p{L}\p{N}]/u)) {
+      return;
+    }
 
     const nextChar = match[1] || match[2] || '';
 
@@ -700,7 +714,9 @@ export class _Tokenizer {
       while ((match = endReg.exec(maskedSrc)) != null) {
         rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
 
-        if (!rDelim) continue; // skip single * in __abc*abc__
+        if (!rDelim) {
+          continue;
+        } // skip single * in __abc*abc__
 
         rLength = [...rDelim].length;
 
@@ -716,7 +732,9 @@ export class _Tokenizer {
 
         delimTotal -= rLength;
 
-        if (delimTotal > 0) continue; // Haven't found enough closing delimiters
+        if (delimTotal > 0) {
+          continue;
+        } // Haven't found enough closing delimiters
 
         // Remove extra characters. *a*** -> *a*
         rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);

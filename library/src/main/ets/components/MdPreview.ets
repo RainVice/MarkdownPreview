@@ -9,8 +9,8 @@ export struct MdPreview {
   aboutToAppear(): void {
     const tokenizer = new Tokenizer()
     const lexer = new Lexer({ tokenizer })
-    const a = lexer.lex(this.md)
-    this.tokensList = lexer.lex(this.md)
+    const temp = lexer.lex(this.md)
+    this.tokensList = temp
   }
 
   build() {
