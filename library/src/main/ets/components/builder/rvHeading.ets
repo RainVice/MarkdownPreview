@@ -1,10 +1,11 @@
 import { Token, Tokens, TokensList } from '../../marked/Tokens'
+import { rvFontStyle } from '../../style/rvFontStyle'
 import { rvInLine } from './rvInLine'
 
 @Component
 export struct rvHeading {
   heading: Tokens.Heading | undefined = undefined
-  private headerStyle: Record<number, Font> = {
+  private headerStyle: Record<number, rvFontStyle> = {
     1: { size: 22, weight: FontWeight.Bold },
     2: { size: 21, weight: FontWeight.Bold },
     3: { size: 20, weight: FontWeight.Bold },

@@ -1,10 +1,14 @@
 import { Token, TokensList } from '../../marked/Tokens'
-import { isCodespan, isDel, isEm, isStrong, isText } from '../../utils/TokenCheck'
+import { updateObj } from '../../utils/FontUtils'
+import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr } from '../../utils/TokenCheck'
+import { rvFontStyle } from '../../style/rvFontStyle'
+import { promptAction } from '@kit.ArkUI'
+import { decodeHtmlEntities } from '../../utils/TextUtils'
 
 @Component
 export struct rvInLine {
   line: Token[] | undefined = undefined
-  fontStyle: Font = {}
+  fontStyle: rvFontStyle = {}
 
   build() {
     Text() {
@@ -16,29 +20,45 @@ export struct rvInLine {
   @Builder
   inLine(
     tokens: Token[] = [],
-    style: Font = {},
-    decoration: DecorationStyleInterface = { type: TextDecorationType.None }) {
+    style: rvFontStyle = {},
+    decoration: DecorationStyleInterface = { type: TextDecorationType.None },
+    textType: TextType = TextType.Normal,
+    event: () => void = () => {
+    }) {
     ForEach(tokens, (item: Token, index: number) => {
       if (isText(item)) {
-        Span(item.text).font(style).decoration(decoration)
+        Span(decodeHtmlEntities(item.text)).font(style).decoration(decoration)
+          .fontColor(style.color)
+          .onClick(textType === TextType.Link ? event : null)
       } else if (isEm(item)) {
-        this.inLine(item.tokens, this.updateFont(style, { style: FontStyle.Italic }))
+        this.inLine(item.tokens, updateObj(style, { style: FontStyle.Italic }))
       } else if (isStrong(item)) {
-        this.inLine(item.tokens, this.updateFont(style, { weight: FontWeight.Bold }))
+        this.inLine(item.tokens, updateObj(style, { weight: FontWeight.Bold }))
       } else if (isDel(item)) {
         this.inLine(item.tokens, undefined, { type: TextDecorationType.LineThrough })
       } else if (isCodespan(item)) {
-        Span(`「${item.text}」`).font(style).decoration(decoration).fontColor(Color.Red)
+        Span(`「${decodeHtmlEntities(item.text)}」`).font(style).decoration(decoration).fontColor(Color.Red)
+          .onClick(textType === TextType.Link ? event : null)
+      } else if (isImage(item)) {
+        if (textType === TextType.Link) {
+          SymbolSpan($r('sys.symbol.share'))
+            .fontColor([Color.Gray])
+          Span("跳转链接").onClick(event).fontColor(Color.Gray)
+        }
+        ImageSpan(item.href).width("100%")
+      } else if (isLink(item)) {
+        this.inLine(item.tokens, updateObj(style, { color: Color.Blue }), { type: TextDecorationType.Underline },
+          TextType.Link, () => {
+            promptAction.showToast({ message: "点击链接" })
+          })
+      } else if (isBr(item)) {
+        Span('\n')
       }
     })
   }
+}
 
-  updateFont(old: Font, newVal: Font) {
-    for (let key of Object.keys(newVal)) {
-      if (newVal[key]) {
-        old[key] = newVal[key]
-      }
-    }
-    return old
-  }
+enum TextType {
+  Normal,
+  Link,
 }

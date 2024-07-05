@@ -95,7 +95,8 @@ export class _Tokenizer {
           ? rtrim(text, '\n')
           : text
       };
-    } else if (cap && cap[3]) {
+    }
+    else if (cap && cap[3]) {
       const sub = /^ {0,3}([`~]{3})(.*?)\n([\s\S]*?)\1/.exec(cap[0])
       return {
         type: 'code',

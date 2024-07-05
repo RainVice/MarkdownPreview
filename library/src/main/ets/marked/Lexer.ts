@@ -261,8 +261,8 @@ export class _Lexer {
         continue;
       }
 
-      // text
-      if (token = this.tokenizer.text(src)) {
+      // paragraph
+      if (token = this.tokenizer.paragraph(src)) {
         src = src.substring(token.raw.length);
         lastToken = tokens[tokens.length - 1];
         if (lastToken && lastToken.type === 'text') {
