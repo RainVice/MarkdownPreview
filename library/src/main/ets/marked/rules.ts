@@ -71,25 +71,6 @@ const blockquote = edit(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/)
   .replace('paragraph', paragraph)
   .getRegex();
 
-/**
- * Normal Block Grammar
- */
-
-const blockNormal = {
-  blockquote,
-  code: blockCode,
-  def,
-  fences,
-  heading,
-  hr,
-  html,
-  lheading,
-  list,
-  newline,
-  paragraph,
-  table: noopTest,
-  text: blockText
-};
 
 type BlockKeys = keyof typeof blockNormal;
 
@@ -110,6 +91,28 @@ const gfmTable = edit(
   .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
   .replace('tag', _tag) // tables can be interrupted by type (6) html blocks
   .getRegex();
+
+
+/**
+ * Normal Block Grammar
+ */
+
+const blockNormal = {
+  blockquote,
+  code: blockCode,
+  def,
+  fences,
+  heading,
+  hr,
+  html,
+  lheading,
+  list,
+  newline,
+  paragraph,
+  table: gfmTable,
+  text: blockText
+};
+
 
 const blockGfm: Record<BlockKeys, RegExp> = {
   ...blockNormal,

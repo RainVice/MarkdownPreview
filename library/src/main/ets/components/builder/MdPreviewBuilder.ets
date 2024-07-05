@@ -1,11 +1,12 @@
 import { Token, TokensList } from '../../marked/Tokens'
-import { isBlockquote, isHeading, isHr, isParagraph, isCode, isImage, isList } from '../../utils/TokenCheck'
+import { isBlockquote, isHeading, isHr, isParagraph, isCode, isImage, isList, isTable } from '../../utils/TokenCheck'
 import { rvBlockquote } from './rvBlockquote'
 import { rvCode } from './rvCode'
 import { rvHeading } from './rvHeading'
 import { rvHr } from './rvHr'
 import { rvList } from './rvList'
 import { rvParagraph } from './rvParagraph'
+import { rvTable } from './rvTable'
 
 @Component
 export struct MdPreviewBuilder {
@@ -30,6 +31,8 @@ export struct MdPreviewBuilder {
           rvCode({ code: item })
         } else if (isList(item)) {
           rvList({ list: item, listLevel: this.listLevel, listSerial: this.listSerial })
+        } else if(isTable(item)){
+          rvTable({table: item})
         }
       })
     }
