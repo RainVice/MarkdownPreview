@@ -4,7 +4,10 @@ import { MdPreviewBuilder } from './MdPreviewBuilder'
 @Component
 export struct rvList {
   list: Tokens.List | undefined = undefined
-  level: number = 0
+  // 列表层级
+  listLevel: number = 0
+  // 列表处于当前层级的第几序列
+  listSerial: string = ''
 
   build() {
     Column() {
@@ -18,10 +21,14 @@ export struct rvList {
 
   @Builder
   orderList() {
-    ForEach(this.list?.items, (listItem: Tokens.ListItem, index: number) => {
-      Row({ space: 10 }) {
-        Text(`${index + 1}.`).fontSize(16 - this.level * 2)
-        MdPreviewBuilder({ tokensList: listItem.tokens as TokensList, level: this.level + 1 })
+    ForEach(this.list?.items, (item: Tokens.ListItem, index: number) => {
+      Row({ space: 5 }) {
+        Text(`${this.listSerial}${index + 1}`)
+        MdPreviewBuilder({
+          tokensList: item.tokens as TokensList,
+          listLevel: this.listLevel + 1,
+          listSerial: `${this.listSerial}${index + 1}.`
+        })
       }
       .alignItems(VerticalAlign.Top)
     })
@@ -30,7 +37,14 @@ export struct rvList {
   @Builder
   unOrderList() {
     ForEach(this.list?.items, (item: Tokens.ListItem, index: number) => {
-
+      Row({ space: 5 }) {
+        Text("•")
+        MdPreviewBuilder({
+          tokensList: item.tokens as TokensList,
+          listLevel: this.listLevel + 1,
+        })
+      }
+      .alignItems(VerticalAlign.Top)
     })
   }
 }

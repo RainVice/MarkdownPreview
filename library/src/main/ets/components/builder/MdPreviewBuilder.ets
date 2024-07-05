@@ -10,7 +10,10 @@ import { rvParagraph } from './rvParagraph'
 @Component
 export struct MdPreviewBuilder {
   tokensList: TokensList | undefined = undefined
-  level: number = 0
+  // 列表层级
+  listLevel: number = 0
+  // 列表处于当前层级的第几序列
+  listSerial: string = ''
 
   build() {
     Column({ space: 10 }) {
@@ -26,7 +29,7 @@ export struct MdPreviewBuilder {
         } else if (isCode(item)) {
           rvCode({ code: item })
         } else if (isList(item)) {
-          rvList({list: item,level: this.level})
+          rvList({ list: item, listLevel: this.listLevel, listSerial: this.listSerial })
         }
       })
     }
