@@ -808,16 +808,15 @@ export class _Tokenizer {
 
   autolink(src: string): Tokens.Link | undefined {
     const cap = this.rules.inline.autolink.exec(src);
-    if (cap) {
+    if (cap && cap[1]) {
       let text, href;
-      if (cap[2] === '@') {
-        text = escape(cap[1]);
+      if (cap[3] === '@') {
+        text = escape(cap[2]);
         href = 'mailto:' + text;
       } else {
-        text = escape(cap[1]);
+        text = escape(cap[2]);
         href = text;
       }
-
       return {
         type: 'link',
         raw: cap[0],
@@ -828,6 +827,21 @@ export class _Tokenizer {
             type: 'text',
             raw: text,
             text
+          }
+        ]
+      };
+    }
+    else if(cap && cap[4]){
+      return {
+        type: 'link',
+        raw: cap[0],
+        text: cap[4],
+        href: cap[4],
+        tokens: [
+          {
+            type: 'text',
+            raw: cap[4],
+            text: cap[4]
           }
         ]
       };

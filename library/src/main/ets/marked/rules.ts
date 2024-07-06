@@ -146,7 +146,7 @@ const blockPedantic: Record<BlockKeys, RegExp> = {
       + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)'
       + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b')
     .getRegex(),
-  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
+  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["'(][^\n]+["')]))? *(?:\n+|$)/,
   heading: /^(#{1,6})(.*)(?:\n+|$)/,
   fences: noopTest, // fences not supported
   lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
@@ -212,9 +212,10 @@ const anyPunctuation = edit(/\\([punct])/, 'gu')
   .replace(/punct/g, _punctuation)
   .getRegex();
 
-const autolink = edit(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/)
+const autolink = edit(/(^<(scheme:[^\s\x00-\x1f<>]*|email)>)|(^link)/)
   .replace('scheme', /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/)
   .replace('email', /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/)
+  .replace('link', 'https*:\\/\\/[\\S]+\\.[\\S]+')
   .getRegex();
 
 const _inlineComment = edit(_comment).replace('(?:-->|$)', '-->').getRegex();

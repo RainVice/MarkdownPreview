@@ -1,6 +1,6 @@
 import { Token, TokensList } from '../../marked/Tokens'
 import { updateObj } from '../../utils/FontUtils'
-import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr } from '../../utils/TokenCheck'
+import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr, isEscape } from '../../utils/TokenCheck'
 import { rvFontStyle } from '../../style/rvFontStyle'
 import { promptAction } from '@kit.ArkUI'
 import { decodeHtmlEntities } from '../../utils/TextUtils'
@@ -53,6 +53,9 @@ export struct rvInLine {
           })
       } else if (isBr(item)) {
         Span('\n')
+      } else if (isEscape(item)) {
+        Span(decodeHtmlEntities(item.text)).font(style).decoration(decoration)
+          .fontColor(style.color)
       }
     })
   }

@@ -9,7 +9,7 @@ export struct rvTable {
   build() {
     Scroll() {
       Column() {
-        Row() {
+        Row({space: 5}) {
           ForEach(this.table?.header, (item: Tokens.TableCell, index: number) => {
             Column() {
               rvInLine({ line: item.tokens, fontStyle: { weight: FontWeight.Medium } })
@@ -18,12 +18,12 @@ export struct rvTable {
             .alignItems(item.align === 'right' ? HorizontalAlign.End :
               item.align === 'center' ? HorizontalAlign.Center : HorizontalAlign.Start)
             .padding(5)
-            .backgroundColor("#F0F0F0")
           })
         }
+        .backgroundColor("#F0F0F0")
 
         ForEach(this.table?.rows, (row: Tokens.TableCell[], rowNum: number) => {
-          Row() {
+          Row({space: 5}) {
             ForEach(row, (item: Tokens.TableCell) => {
               Column() {
                 rvInLine({ line: item.tokens, fontStyle: { size: 14 } })
@@ -32,15 +32,15 @@ export struct rvTable {
               .alignItems(item.align === 'right' ? HorizontalAlign.End :
                 item.align === 'center' ? HorizontalAlign.Center : HorizontalAlign.Start)
               .padding(5)
-              .backgroundColor(rowNum % 2 === 0 ? Color.White : "#F8F8F8")
             })
           }
+          .backgroundColor(rowNum % 2 === 0 ? Color.White : "#F8F8F8")
         })
       }
       .width(this.table!.header.length * 100 < this.w ? "100%" : this.table!.header.length * 100)
     }
     .width("100%")
-    .onSizeChange((oldVal: SizeOptions,newVal: SizeOptions) => {
+    .onSizeChange((_oldVal: SizeOptions,newVal: SizeOptions) => {
       this.w = newVal.width as number
     })
     .scrollable(ScrollDirection.Horizontal)

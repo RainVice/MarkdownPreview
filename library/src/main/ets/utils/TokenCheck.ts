@@ -55,6 +55,11 @@ export function isBr(token: Token): token is Tokens.Br {
 export function isList(token: Token): token is Tokens.List {
   return token.type === "list"
 }
+
 export function isTable(token: Token): token is Tokens.Table {
   return token.type === "table"
+}
+
+export function isEscape(token: Token): token is Tokens.Escape {
+  return token.type === "escape"
 }
