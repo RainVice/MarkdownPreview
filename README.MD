@@ -1,3 +1,7 @@
+即将实现：
+- 增加自定义预览样式选项
+- 自定义语法解析
+
 已实现：
 - [标题](https://markdown.com.cn/basic-syntax/headings.html)
 - [段落](https://markdown.com.cn/basic-syntax/paragraphs.html)
