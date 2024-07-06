@@ -1,4 +1,4 @@
-import { Tokens } from '../../marked/Tokens'
+import { Tokens } from '../../marked'
 
 @Component
 export struct rvCode {
@@ -24,15 +24,17 @@ export struct rvCode {
           .fontColor(Color.White)
           .fontSize(14)
       }
+      .align(Alignment.Start)
+      .width("100%")
       .padding(10)
       .scrollable(ScrollDirection.Horizontal)
+      .backgroundColor("#1E1F22")
 
     }
     .clip(true)
     .alignItems(HorizontalAlign.Start)
     .borderRadius(10)
     .width("100%")
-    .backgroundColor("#1E1F22")
 
   }
 }

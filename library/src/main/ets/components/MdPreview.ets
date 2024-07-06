@@ -1,4 +1,5 @@
-import { Lexer, Tokenizer, TokensList } from '../marked/marked'
+import { Lexer, TokensList } from '../marked'
+import { PreviewOption } from '../option'
 import { MdPreviewBuilder } from './builder/MdPreviewBuilder'
 
 @Component
@@ -7,6 +8,7 @@ export struct MdPreview {
   @State private tokensList: TokensList | undefined = undefined
 
   aboutToAppear(): void {
+    const mdPreviewOption: PreviewOption = new PreviewOption()
     const temp = Lexer.lex(this.md)
     this.tokensList = temp
   }

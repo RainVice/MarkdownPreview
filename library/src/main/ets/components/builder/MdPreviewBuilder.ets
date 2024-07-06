@@ -1,5 +1,5 @@
-import { Token, TokensList } from '../../marked/Tokens'
-import { isBlockquote, isHeading, isHr, isParagraph, isCode, isImage, isList, isTable } from '../../utils/TokenCheck'
+import { Token, TokensList } from '../../marked'
+import { isBlockquote, isHeading, isHr, isParagraph, isCode, isList, isTable } from '../../utils'
 import { rvBlockquote } from './rvBlockquote'
 import { rvCode } from './rvCode'
 import { rvHeading } from './rvHeading'
@@ -8,7 +8,7 @@ import { rvList } from './rvList'
 import { rvParagraph } from './rvParagraph'
 import { rvTable } from './rvTable'
 import { promptAction } from '@kit.ArkUI'
-import { rvFontStyle } from '../../style/rvFontStyle'
+import { FontAttr } from '../../style'
 
 @Component
 export struct MdPreviewBuilder {
@@ -18,11 +18,11 @@ export struct MdPreviewBuilder {
   // 列表处于当前层级的第几序列
   listSerial: string = ''
 
-  fontStyle: rvFontStyle = {}
+  fontStyle: FontAttr = {}
 
   build() {
     Column({ space: 10 }) {
-      ForEach(this.tokensList, (item: Token, index: number) => {
+      ForEach(this.tokensList, (item: Token) => {
         if (isHeading(item)) {
           rvHeading({ heading: item })
         } else if (isParagraph(item)) {
@@ -40,7 +40,7 @@ export struct MdPreviewBuilder {
         }
       })
       if (this.tokensList!['links']) {
-        ForEach(Object.keys(this.tokensList!['links']),(item: string,index:number) => {
+        ForEach(Object.keys(this.tokensList!['links']),(item: string) => {
           Text(){
             Span(`[ ${item} ]: `)
               .fontWeight(FontWeight.Bolder)

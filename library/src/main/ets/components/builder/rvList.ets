@@ -1,4 +1,4 @@
-import { Tokens, TokensList } from '../../marked/Tokens'
+import { Tokens, TokensList } from '../../marked'
 import { MdPreviewBuilder } from './MdPreviewBuilder'
 
 @Component
@@ -36,7 +36,7 @@ export struct rvList {
 
   @Builder
   unOrderList() {
-    ForEach(this.list?.items, (item: Tokens.ListItem, index: number) => {
+    ForEach(this.list?.items, (item: Tokens.ListItem) => {
       if (item.task) {
         Row({ space: 5 }) {
           Checkbox()

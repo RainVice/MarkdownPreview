@@ -1,14 +1,14 @@
-import { Token, TokensList } from '../../marked/Tokens'
-import { updateObj } from '../../utils/FontUtils'
-import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr, isEscape } from '../../utils/TokenCheck'
-import { rvFontStyle } from '../../style/rvFontStyle'
+import { Token } from '../../marked'
+import { updateObj } from '../../utils'
+import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr, isEscape } from '../../utils'
+import { FontAttr } from '../../style'
 import { promptAction } from '@kit.ArkUI'
-import { decodeHtmlEntities } from '../../utils/TextUtils'
+import { decodeHtmlEntities } from '../../utils'
 
 @Component
 export struct rvInLine {
   line: Token[] | undefined = undefined
-  fontStyle: rvFontStyle = {}
+  fontStyle: FontAttr = {}
 
   build() {
     Text() {
@@ -20,16 +20,21 @@ export struct rvInLine {
   @Builder
   inLine(
     tokens: Token[] = [],
-    style: rvFontStyle = {},
+    style: FontAttr = {},
     decoration: DecorationStyleInterface = { type: TextDecorationType.None },
     textType: TextType = TextType.Normal,
     event: () => void = () => {
     }) {
-    ForEach(tokens, (item: Token, index: number) => {
+    ForEach(tokens, (item: Token) => {
       if (isText(item)) {
         Span(decodeHtmlEntities(item.text)).font(style).decoration(decoration)
           .fontColor(style.color)
           .onClick(textType === TextType.Link ? event : null)
+        if (textType === TextType.Link) {
+          SymbolSpan($r('sys.symbol.share'))
+            .fontWeight(FontWeight.Bold)
+            .fontColor([Color.Gray])
+        }
       } else if (isEm(item)) {
         this.inLine(item.tokens, updateObj(style, { style: FontStyle.Italic }))
       } else if (isStrong(item)) {
@@ -42,8 +47,13 @@ export struct rvInLine {
       } else if (isImage(item)) {
         if (textType === TextType.Link) {
           SymbolSpan($r('sys.symbol.share'))
-            .fontColor([Color.Gray])
-          Span("跳转链接").onClick(event).fontColor(Color.Gray)
+            .fontSize(10).fontColor([Color.Gray])
+          Span("跳转链接 ").onClick(event).fontSize(10).fontColor(Color.Gray)
+        }
+        if (item.title) {
+          SymbolSpan($r('sys.symbol.shutter_photo'))
+            .fontSize(10).fontColor([Color.Gray])
+          Span(item.title).fontSize(10).fontColor(Color.Gray)
         }
         ImageSpan(item.href).width("100%")
       } else if (isLink(item)) {

@@ -1,4 +1,4 @@
-import { Tokens } from '../../marked/Tokens'
+import { Tokens } from '../../marked'
 import { rvInLine } from './rvInLine'
 
 @Component

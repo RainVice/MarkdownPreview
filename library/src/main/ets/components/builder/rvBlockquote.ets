@@ -1,4 +1,4 @@
-import { Tokens, TokensList } from '../../marked/Tokens'
+import { Tokens, TokensList } from '../../marked'
 import { MdPreviewBuilder } from './MdPreviewBuilder'
 
 @Component
@@ -10,7 +10,7 @@ export struct rvBlockquote {
     Column(){
       MdPreviewBuilder({tokensList: this.blockquote?.tokens as TokensList})
     }
-    .backgroundColor("#fff3f3f3")
+    .backgroundColor("#f3f3f3")
     .width("100%")
     .padding(5)
     .borderWidth({left: 3})
