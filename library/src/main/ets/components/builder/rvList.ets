@@ -10,7 +10,7 @@ export struct rvList {
   listSerial: string = ''
 
   build() {
-    Column() {
+    Column({space: 5}) {
       if (this.list?.ordered) {
         this.orderList()
       } else {
@@ -37,14 +37,29 @@ export struct rvList {
   @Builder
   unOrderList() {
     ForEach(this.list?.items, (item: Tokens.ListItem, index: number) => {
-      Row({ space: 5 }) {
-        Text("•")
-        MdPreviewBuilder({
-          tokensList: item.tokens as TokensList,
-          listLevel: this.listLevel + 1,
-        })
+      if (item.task) {
+        Row({ space: 5 }) {
+          Checkbox()
+            .select(item.checked)
+            .shape(CheckBoxShape.ROUNDED_SQUARE)
+            .margin(0)
+          MdPreviewBuilder({
+            tokensList: item.tokens as TokensList,
+            listLevel: this.listLevel + 1,
+          })
+        }
+        .hitTestBehavior(HitTestMode.Block)
+        .alignItems(VerticalAlign.Top)
+      }else{
+        Row({ space: 5 }) {
+          Text("•")
+          MdPreviewBuilder({
+            tokensList: item.tokens as TokensList,
+            listLevel: this.listLevel + 1,
+          })
+        }
+        .alignItems(VerticalAlign.Top)
       }
-      .alignItems(VerticalAlign.Top)
     })
   }
 }

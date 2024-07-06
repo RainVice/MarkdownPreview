@@ -7,8 +7,8 @@ export struct MdPreview {
   @State private tokensList: TokensList | undefined = undefined
 
   aboutToAppear(): void {
-    const tokenizer = new Tokenizer()
-    const lexer = new Lexer({ tokenizer })
+    // const tokenizer = new Tokenizer()
+    const lexer = new Lexer()
     const temp = lexer.lex(this.md)
     this.tokensList = temp
   }
