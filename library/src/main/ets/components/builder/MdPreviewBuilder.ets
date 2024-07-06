@@ -8,6 +8,7 @@ import { rvList } from './rvList'
 import { rvParagraph } from './rvParagraph'
 import { rvTable } from './rvTable'
 import { promptAction } from '@kit.ArkUI'
+import { rvFontStyle } from '../../style/rvFontStyle'
 
 @Component
 export struct MdPreviewBuilder {
@@ -16,6 +17,8 @@ export struct MdPreviewBuilder {
   listLevel: number = 0
   // 列表处于当前层级的第几序列
   listSerial: string = ''
+
+  fontStyle: rvFontStyle = {}
 
   build() {
     Column({ space: 10 }) {
