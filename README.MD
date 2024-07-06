@@ -22,6 +22,8 @@
 - [标题编号](https://markdown.com.cn/extended-syntax/heading-ids.html)
 - [使用 Emoji 表情](https://markdown.com.cn/extended-syntax/emoji.html)
 - 代码高亮
+- 数学公式
+- 其他欢迎补充
 
 
 无实现计划：

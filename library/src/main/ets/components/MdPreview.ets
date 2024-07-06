@@ -3,13 +3,11 @@ import { MdPreviewBuilder } from './builder/MdPreviewBuilder'
 
 @Component
 export struct MdPreview {
-  @Require @Prop md: string
+  md: string = ''
   @State private tokensList: TokensList | undefined = undefined
 
   aboutToAppear(): void {
-    // const tokenizer = new Tokenizer()
-    const lexer = new Lexer()
-    const temp = lexer.lex(this.md)
+    const temp = Lexer.lex(this.md)
     this.tokensList = temp
   }
 

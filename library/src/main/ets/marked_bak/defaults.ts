@@ -5,12 +5,16 @@ import type { MarkedOptions } from './MarkedOptions';
  */
 export function _getDefaults(): MarkedOptions {
   return {
+    async: false,
     breaks: false,
     extensions: null,
     gfm: true,
+    hooks: null,
     pedantic: false,
+    renderer: null,
     silent: false,
     tokenizer: null,
+    walkTokens: null
   };
 }
 

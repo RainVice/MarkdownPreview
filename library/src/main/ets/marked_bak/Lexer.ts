@@ -21,10 +21,12 @@ export class _Lexer {
 
   constructor(options?: MarkedOptions) {
     // TokenList cannot be created in one go
-    this.tokens = [] as TokensList;
+    this.tokens = [] as unknown as TokensList;
     this.tokens.links = Object.create(null);
     this.options = options || _defaults;
-    this.tokenizer = this.options.tokenizer || new _Tokenizer();
+    this.options.tokenizer = this.options.tokenizer || new _Tokenizer();
+    this.tokenizer = this.options.tokenizer;
+    this.tokenizer.options = this.options;
     this.tokenizer.lexer = this;
     this.inlineQueue = [];
     this.state = {

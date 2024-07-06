@@ -71,7 +71,6 @@ export class _Tokenizer {
 
   constructor(options?: MarkedOptions) {
     this.options = options || _defaults;
-    this.options.tokenizer = this
   }
 
   space(src: string): Tokens.Space | undefined {
