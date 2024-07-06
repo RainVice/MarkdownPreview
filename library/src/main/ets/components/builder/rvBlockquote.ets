@@ -12,7 +12,7 @@ export struct rvBlockquote {
     }
     .backgroundColor("#f3f3f3")
     .width("100%")
-    .padding(5)
+    .padding(15)
     .borderWidth({left: 3})
     .borderColor(Color.Green)
   }

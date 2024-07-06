@@ -1,8 +1,14 @@
 即将实现：
+
 - 增加自定义预览样式选项
 - 自定义语法解析
 
+已实现但有缺陷：
+
+- 暂无
+
 已实现：
+
 - [标题](https://markdown.com.cn/basic-syntax/headings.html)
 - [段落](https://markdown.com.cn/basic-syntax/paragraphs.html)
 - [换行](https://markdown.com.cn/basic-syntax/line-breaks.html)
@@ -20,8 +26,8 @@
 - [任务列表](https://markdown.com.cn/extended-syntax/task-lists.html)
 - [自动网址链接](https://markdown.com.cn/extended-syntax/automatic-url-linking.html)
 
-
 暂未实现：
+
 - [内嵌 HTML 标签](https://markdown.com.cn/basic-syntax/htmls.html)
 - [标题编号](https://markdown.com.cn/extended-syntax/heading-ids.html)
 - [使用 Emoji 表情](https://markdown.com.cn/extended-syntax/emoji.html)
@@ -29,7 +35,7 @@
 - 数学公式
 - 其他欢迎补充
 
-
 无实现计划：
+
 - [脚注](https://markdown.com.cn/extended-syntax/footnotes.html)
 - [定义列表](https://markdown.com.cn/extended-syntax/definition-lists.html)

@@ -50,10 +50,10 @@ export struct rvInLine {
             .fontSize(10).fontColor([Color.Gray])
           Span("跳转链接 ").onClick(event).fontSize(10).fontColor(Color.Gray)
         }
-        if (item.title) {
+        if (item.title || item.text) {
           SymbolSpan($r('sys.symbol.shutter_photo'))
             .fontSize(10).fontColor([Color.Gray])
-          Span(item.title).fontSize(10).fontColor(Color.Gray)
+          Span(`${item.title || ''} (${item.text || ''})`).fontSize(10).fontColor(Color.Gray)
         }
         ImageSpan(item.href).width("100%")
       } else if (isLink(item)) {
