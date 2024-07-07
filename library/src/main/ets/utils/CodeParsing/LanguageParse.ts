@@ -22,7 +22,6 @@ export abstract class LanguageParse {
     const tokens: LanguageToken[] = [];
     while (line.length > 0) {
       let token: string;
-      // "keyword" | "comment" | "string" | "boolean" | "method" | "number" | "operator" | "block"| "identifier" | "default"
       for (const tokenType of Object.values(TokenType)) {
         if (token = this.matchResults(this.rules[tokenType], line)) {
           tokens.push(new LanguageToken(token, tokenType));

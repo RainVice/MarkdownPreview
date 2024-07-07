@@ -16,13 +16,13 @@ export struct MdPreview {
 
 
     const java = new JavaParse("public static void main(){}")
-    console.log("解析成功：",JSON.stringify(java.parseCode()))
+    console.log("解析成功：", JSON.stringify(java.parseCode()))
   }
 
   build() {
     if (this.tokensList) {
       Column() {
-        MdPreviewBuilder({ tokensList: this.tokensList})
+        MdPreviewBuilder({ tokensList: this.tokensList })
       }
     }
   }
