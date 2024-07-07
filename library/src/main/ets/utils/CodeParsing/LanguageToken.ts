@@ -9,6 +9,15 @@ export class LanguageToken {
   }
 }
 
-export type TokenType = "keyword" | "comment" | "string" | "boolean" | "method" | "number" | "operator" | "block"
-  | "identifier" | "default"
-
+export enum TokenType {
+  Keyword = "keyword",
+  Comment = "comment",
+  String = "string",
+  Boolean = "boolean",
+  Method = "method",
+  Number = "number",
+  Operator = "operator",
+  Block = "block",
+  Identifier = "identifier",
+  Default = "default"
+}
