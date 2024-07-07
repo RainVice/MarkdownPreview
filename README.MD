@@ -1,6 +1,7 @@
 即将实现功能：
 
 - 自定义语法解析
+- 代码高亮
 
 已实现功能：
 
@@ -30,7 +31,6 @@
 - [内嵌 HTML 标签](https://markdown.com.cn/basic-syntax/htmls.html)
 - [标题编号](https://markdown.com.cn/extended-syntax/heading-ids.html)
 - [使用 Emoji 表情](https://markdown.com.cn/extended-syntax/emoji.html)
-- 代码高亮
 - 数学公式
 - 其他欢迎补充
 
