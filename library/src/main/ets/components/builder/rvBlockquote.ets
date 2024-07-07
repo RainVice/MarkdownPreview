@@ -1,19 +1,22 @@
 import { Tokens, TokensList } from '../../marked'
+import { MdPreviewOption } from '../../option/PreviewOption'
+import { BlockquoteAttr } from '../../style'
 import { MdPreviewBuilder } from './MdPreviewBuilder'
 
 @Component
 export struct rvBlockquote {
 
   blockquote: Tokens.Blockquote | undefined = undefined
+  private attr: BlockquoteAttr = MdPreviewOption.value.blockquoteAttr
 
   build() {
     Column(){
       MdPreviewBuilder({tokensList: this.blockquote?.tokens as TokensList})
     }
-    .backgroundColor("#f3f3f3")
+    .backgroundColor(this.attr.backgroundColor)
     .width("100%")
-    .padding(15)
-    .borderWidth({left: 3})
-    .borderColor(Color.Green)
+    .padding(this.attr.padding)
+    .borderWidth({left: this.attr.borderWidth})
+    .borderColor(this.attr.borderColor)
   }
 }

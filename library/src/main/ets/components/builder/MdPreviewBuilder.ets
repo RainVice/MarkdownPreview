@@ -8,17 +8,13 @@ import { rvList } from './rvList'
 import { rvParagraph } from './rvParagraph'
 import { rvTable } from './rvTable'
 import { promptAction } from '@kit.ArkUI'
-import { FontAttr } from '../../style'
 
 @Component
 export struct MdPreviewBuilder {
+  // token集合
   tokensList: TokensList | undefined = undefined
   // 列表层级
-  listLevel: number = 0
-  // 列表处于当前层级的第几序列
-  listSerial: string = ''
-
-  fontStyle: FontAttr = {}
+  listLevel: number[] = []
 
   build() {
     Column({ space: 10 }) {
@@ -34,21 +30,21 @@ export struct MdPreviewBuilder {
         } else if (isCode(item)) {
           rvCode({ code: item })
         } else if (isList(item)) {
-          rvList({ list: item, listLevel: this.listLevel, listSerial: this.listSerial })
-        } else if(isTable(item)){
-          rvTable({table: item})
+          rvList({ list: item, listLevel: this.listLevel })
+        } else if (isTable(item)) {
+          rvTable({ table: item })
         }
       })
       if (this.tokensList!['links']) {
-        ForEach(Object.keys(this.tokensList!['links']),(item: string) => {
-          Text(){
+        ForEach(Object.keys(this.tokensList!['links']), (item: string) => {
+          Text() {
             Span(`[ ${item} ]: `)
               .fontWeight(FontWeight.Bolder)
             Span(`${this.tokensList!['links'][item].href}`)
               .fontColor("#5C5C5C")
-              .decoration({type: TextDecorationType.Underline})
+              .decoration({ type: TextDecorationType.Underline })
               .onClick(() => {
-                promptAction.showToast({message: "超链接"})
+                promptAction.showToast({ message: "超链接" })
               })
             Span(` ${this.tokensList!['links'][item].title}`)
           }

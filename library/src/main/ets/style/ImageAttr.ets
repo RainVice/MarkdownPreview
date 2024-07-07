@@ -11,8 +11,18 @@ export  class ImageAttr {
   titleColor: ResourceColor = Color.Gray
 
   /**
+   * 标题图标颜色
+   */
+  titleIconColor: ResourceColor = Color.Gray
+
+  /**
    * 标题大小
    */
   titleSize: number = 10
+
+  /**
+   * 图片点击事件
+   */
+  onClick: (clickEvent: ClickEvent, url: string) => void = () => {}
 
 }

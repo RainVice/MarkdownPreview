@@ -11,6 +11,11 @@ export class CodeAttr{
   titleTextColor: ResourceColor = Color.White
 
   /**
+   * 标题文字大小
+   */
+  titleTextSize: number = 12
+
+  /**
    * 圆角大小
    */
   borderRadius: number = 10
@@ -19,6 +24,16 @@ export class CodeAttr{
    * 代码区域背景颜色
    */
   codeBackgroundColor: ResourceColor = "#1E1F22"
+
+  /**
+   * 代码文字大小
+   */
+  codeTextSize: number = 14
+
+  /**
+   * 默认代码文字颜色
+   */
+  codeTextColor: ResourceColor = Color.White
 
   /**
    * todo 代码高亮规则

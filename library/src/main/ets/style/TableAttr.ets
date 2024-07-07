@@ -35,7 +35,7 @@ export class TableAttr {
   cellBorder: BorderOptions = {}
 
   /**
-   * 列宽,单位 vp
+   * 列宽,单位 vp，当总列宽小于屏幕宽时，默认撑满屏幕
    */
   columnWidth: number = 100
 

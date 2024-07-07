@@ -1,4 +1,5 @@
-import { MdPreview } from '@rv/markdown-preview';
+import { MdPreview, PreviewOption } from '@rv/markdown-preview';
+import { promptAction } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -6,9 +7,7 @@ struct Index {
   @State md: string = `
 [![沙漠中的岩石图片](https://markdown.com.cn/assets/img/philly-magic-garden.9c0b4415.jpg "Shiprock")](https://markdown.com.cn)
 
-![这是图片](https://markdown.com.cn/assets/img/philly-magic-garden.9c0b4415.jpg "Magic Gardens") asdwesrfsdf
-
->微信公众号排版工具。问题或建议，请公众号留言。**[程序员翻身](#jump_8)**
+>微信公众号排版工~~具~~。问题或建议，请公众号留言。**[程序员翻身](#jump_8)**
 
 建议使用 **Chrome** 浏览器，体验最佳效果。
 
@@ -72,8 +71,11 @@ Markdown是一种轻量级的「标记语言」。
 有序列表的使用，在数字及符号\`.\`后加空格后输入内容，如下：
 
 1. 有序列表 1
+    1. 有序列表 1.1
+        1. 有序列表 1.1.1
 2. 有序列表 2
 3. 有序列表 3
+    1. 有序列表 3.1
 
 ### 2.5 引用
 
@@ -273,9 +275,15 @@ Markdown Nice 这么好用，简直是{喜大普奔|hē hē hē hē}呀！
 
 `
 
+  option: PreviewOption = new PreviewOption()
+
+  aboutToAppear(): void {
+
+  }
+
   build() {
     Scroll() {
-      MdPreview({ md: this.md })
+      MdPreview({ md: this.md ,previewOption: this.option})
     }
     .padding(10)
     .height('100%')

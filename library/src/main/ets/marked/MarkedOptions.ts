@@ -20,12 +20,6 @@ export interface TokenizerExtension {
 }
 
 
-type TokenizerApi = Omit<_Tokenizer, 'constructor' | 'options' | 'rules' | 'lexer'>;
-type TokenizerObject = {
-  [K in keyof TokenizerApi]?: (this: _Tokenizer,
-    ...args: Parameters<TokenizerApi[K]>) => ReturnType<TokenizerApi[K]> | false
-};
-
 export interface MarkedExtension {
   /**
    * Enable GFM line breaks. This option requires the gfm option to be true.
@@ -48,7 +42,7 @@ export interface MarkedExtension {
   silent?: boolean | undefined;
 }
 
-export interface MarkedOptions extends Omit<MarkedExtension, | 'tokenizer' | 'extensions'> {
+export interface MarkedOptions extends Omit<MarkedExtension, 'tokenizer' | 'extensions'> {
 
 
   /**

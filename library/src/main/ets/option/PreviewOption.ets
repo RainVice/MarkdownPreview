@@ -1,6 +1,7 @@
 import { BlockquoteAttr, CodeAttr,
-  DeleteLineAttr,
+  EmphasizeAttr,
   DividerAttr, FontAttr, ImageAttr, LinkAttr, ListAttr, TableAttr } from '../style'
+import { CodeSpanAttr } from '../style/CodeSpanAttr'
 
 export class PreviewOption {
   blockquoteAttr: BlockquoteAttr = new BlockquoteAttr()
@@ -19,8 +20,10 @@ export class PreviewOption {
   imageAttr: ImageAttr = new ImageAttr()
   tableAttr: TableAttr = new TableAttr()
   codeAttr: CodeAttr = new CodeAttr()
-  deleteLineAttr: DeleteLineAttr = new DeleteLineAttr()
+  emphasizeAttr: EmphasizeAttr = new EmphasizeAttr()
+  codeSpanAttr: CodeSpanAttr = new CodeSpanAttr()
 }
 
-
-
+export class MdPreviewOption extends PreviewOption {
+  static value: PreviewOption = new PreviewOption()
+}
