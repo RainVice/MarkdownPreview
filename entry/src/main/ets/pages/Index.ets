@@ -4,6 +4,28 @@ import { MdPreview, PreviewOption } from '@rv/markdown-preview';
 @Component
 struct Index {
   @State md: string = `
+
+\`\`\`
+  bash
+  clojure，cpp，cs，css
+  dart，dockerfile, diff
+  erlang
+  go，gradle，groovy
+  haskell
+  java，javascript，json，julia
+  kotlin
+  lisp，lua
+  makefile，markdown，matlab
+  objectivec
+  perl，php，python
+  r，ruby，rust
+  scala，shell，sql，swift
+  tex，typescript
+  verilog，vhdl
+  xml
+  yaml
+\`\`\`
+
 \`\`\`java
 // FileName: HelloWorld.java
 public class HelloWorld {

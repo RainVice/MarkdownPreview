@@ -7,10 +7,11 @@ import { LanguageParse, LanguageToken } from '../../utils'
 export struct rvCode {
   code: Tokens.Code | undefined = undefined
   private attr: CodeAttr = MdPreviewOption.value.codeAttr
-  private parse: LanguageParse | undefined = undefined
+  private tokens: LanguageToken[][] = []
 
   aboutToAppear(): void {
-    this.parse = MdPreviewOption.value.getLanguageParse(this.code!.lang!.toUpperCase())
+    this.tokens =
+      MdPreviewOption.value.codeAttr.getLanguageParse(this.code!.lang!.toUpperCase()).parseCode(this.code!.text)
   }
 
   build() {
@@ -29,24 +30,33 @@ export struct rvCode {
       .width("100%")
 
 
-      // todo 代码预览
       Scroll() {
-        Row() {
-          if (this.code?.lang) {
+        Row({ space: 10 }) {
+          Column() {
+            ForEach(this.tokens, (_token: LanguageToken[], index: number) => {
+              Text(index.toString())
+                .fontSize(this.attr.lineNumberTextSize)
+                .fontColor(this.attr.lineNumberColor)
+            })
+          }
+          .backgroundColor(this.attr.lineNumberBackgroundColor)
+          .alignItems(HorizontalAlign.End)
 
-            ForEach(this.parse?.parseCode(this.code?.text), (tokens: LanguageToken[], index: number) => {
-              Column() {
-                Text(index.toString())
-              }
-
+          Column() {
+            ForEach(this.tokens, (token: LanguageToken[]) => {
               Text() {
-                ForEach(tokens, (item: LanguageToken) => {
+                ForEach(token, (item: LanguageToken) => {
                   Span(item.value)
-                    .fontColor(this.parse?.color[item.type])
+                    .fontColor(item.color)
+                    .fontSize(this.attr.codeTextSize)
+
+
                 })
               }
             })
           }
+          .alignItems(HorizontalAlign.Start)
+
         }
         .justifyContent(FlexAlign.Start)
 

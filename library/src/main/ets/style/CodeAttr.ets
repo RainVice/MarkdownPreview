@@ -1,3 +1,5 @@
+import { DefaultParse, JavaParse, LanguageParse } from '../utils'
+
 export class CodeAttr{
 
   /**
@@ -30,15 +32,37 @@ export class CodeAttr{
    */
   codeTextSize: number = 14
 
-  /**
-   * 默认代码文字颜色
-   */
-  codeTextColor: ResourceColor = Color.White
 
   /**
-   * todo 代码高亮规则
+   * 行号颜色
    */
+  lineNumberColor: ResourceColor = "#9A9EA3"
 
+  /**
+   * 行号文字大小
+   */
+  lineNumberTextSize: number = 14
+
+  /**
+   * 行号背景
+   */
+  lineNumberBackgroundColor: ResourceColor = "#1E1F22"
+
+  // 代码高亮规则
+  private languageParses: Record<string, LanguageParse> = {
+    "JAVA": new JavaParse(),
+    "DEFAULT": new DefaultParse()
+  }
+
+  // 设置代码高亮
+  setLanguageParse(languageParse: LanguageParse) {
+    this.languageParses[languageParse.language.toUpperCase()] = languageParse
+  }
+
+  // 获取代码高亮规则
+  getLanguageParse(language: string | undefined): LanguageParse {
+    return this.languageParses[language ? language.toUpperCase() : "DEFAULT"] || this.languageParses["DEFAULT"];
+  }
 
 
 }

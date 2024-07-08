@@ -6,18 +6,7 @@ export type LanguageRules = {
   [key in TokenType]: ParseRule | undefined
 }
 
-/**
- * 文本token
- */
-export class LanguageToken {
-  public value: string
-  public type: TokenType
 
-  constructor(value: string, type: TokenType) {
-    this.value = value;
-    this.type = type;
-  }
-}
 
 
 /**
