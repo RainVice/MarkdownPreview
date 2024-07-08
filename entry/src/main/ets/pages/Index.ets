@@ -35,7 +35,6 @@ public class HelloWorld {
   }
 }
 \`\`\`
-[![沙漠中的岩石图片](https://markdown.com.cn/assets/img/philly-magic-garden.9c0b4415.jpg "Shiprock")](https://markdown.com.cn)
 
 >微信公众号排版工~~具~~。问题或建议，请公众号留言。**[程序员翻身](#jump_8)**
 
