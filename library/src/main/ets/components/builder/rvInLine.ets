@@ -48,7 +48,7 @@ export struct rvInLine {
         this.inLine(item.tokens, style,
           { type: TextDecorationType.LineThrough, color: MdPreviewOption.value.emphasizeAttr.delLineColor })
       } else if (isCodespan(item)) {
-        Span(MdPreviewOption.value.codeSpanAttr.previewStrategy(item.text))
+        Span(decodeHtmlEntities(MdPreviewOption.value.codeSpanAttr.previewStrategy(item.text)))
           .textBackgroundStyle(MdPreviewOption.value.codeSpanAttr.textBackgroundStyle)
           .font(style)// .decoration(decoration)
           .fontColor(MdPreviewOption.value.codeSpanAttr.fontStyle.color)
