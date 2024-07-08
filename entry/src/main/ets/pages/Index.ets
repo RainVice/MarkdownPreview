@@ -6,24 +6,24 @@ struct Index {
   @State md: string = `
 
 \`\`\`
-  bash
-  clojure，cpp，cs，css
-  dart，dockerfile, diff
-  erlang
-  go，gradle，groovy
-  haskell
-  java，javascript，json，julia
-  kotlin
-  lisp，lua
-  makefile，markdown，matlab
-  objectivec
-  perl，php，python
-  r，ruby，rust
-  scala，shell，sql，swift
-  tex，typescript
-  verilog，vhdl
-  xml
-  yaml
+bash
+clojure，cpp，cs，css
+dart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diffdart，dockerfile, diff
+erlang
+go，gradle，groovy
+haskell
+java，javascript，json，julia
+kotlin
+lisp，lua
+makefile，markdown，matlab
+objectivec
+perl，php，python
+r，ruby，rust
+scala，shell，sql，swift
+tex，typescript
+verilog，vhdl
+xml
+yaml
 \`\`\`
 
 \`\`\`java

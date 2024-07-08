@@ -30,18 +30,23 @@ export struct rvCode {
       .width("100%")
 
 
-      Scroll() {
-        Row({ space: 10 }) {
-          Column() {
-            ForEach(this.tokens, (_token: LanguageToken[], index: number) => {
-              Text(index.toString())
-                .fontSize(this.attr.lineNumberTextSize)
-                .fontColor(this.attr.lineNumberColor)
-            })
-          }
-          .backgroundColor(this.attr.lineNumberBackgroundColor)
-          .alignItems(HorizontalAlign.End)
+      Row() {
+        Column() {
+          ForEach(this.tokens, (_token: LanguageToken[], index: number) => {
+            Text(index.toString())
+              .fontSize(this.attr.codeTextSize)
+              .fontColor(this.attr.lineNumberColor)
+          })
+        }
+        .padding({top: 10,bottom: 10,left: 5,right: 5})
+        .backgroundColor(this.attr.codeBackgroundColor)
+        .alignItems(HorizontalAlign.End)
+        .border({
+          width: {right: 1},
+          color: this.attr.lineNumberColor
+        })
 
+        Scroll() {
           Column() {
             ForEach(this.tokens, (token: LanguageToken[]) => {
               Text() {
@@ -49,23 +54,19 @@ export struct rvCode {
                   Span(item.value)
                     .fontColor(item.color)
                     .fontSize(this.attr.codeTextSize)
-
-
                 })
               }
             })
           }
           .alignItems(HorizontalAlign.Start)
-
         }
-        .justifyContent(FlexAlign.Start)
-
+        .align(Alignment.Start)
+        .layoutWeight(1)
+        .padding(10)
+        .scrollable(ScrollDirection.Horizontal)
       }
-      .align(Alignment.Start)
-      .width("100%")
-      .padding(10)
-      .scrollable(ScrollDirection.Horizontal)
       .backgroundColor(this.attr.codeBackgroundColor)
+      .justifyContent(FlexAlign.Start)
 
     }
     .clip(true)
