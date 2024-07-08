@@ -9,8 +9,7 @@ export struct MdPreview {
   previewOption: PreviewOption = new PreviewOption()
 
   aboutToAppear(): void {
-    const temp = Lexer.lex(this.md)
-    this.tokensList = temp
+    this.tokensList = Lexer.lex(this.md)
     MdPreviewOption.value = this.previewOption
   }
 

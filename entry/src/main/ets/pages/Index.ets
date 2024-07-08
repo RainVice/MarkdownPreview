@@ -1,10 +1,18 @@
 import { MdPreview, PreviewOption } from '@rv/markdown-preview';
-import { promptAction } from '@kit.ArkUI';
 
 @Entry
 @Component
 struct Index {
   @State md: string = `
+\`\`\`java
+// FileName: HelloWorld.java
+public class HelloWorld {
+  // Java 入口程序，程序从此入口
+  public static void main(String[] args) {
+    System.out.println("Hello,World!"); // 向控制台打印一条语句
+  }
+}
+\`\`\`
 [![沙漠中的岩石图片](https://markdown.com.cn/assets/img/philly-magic-garden.9c0b4415.jpg "Shiprock")](https://markdown.com.cn)
 
 >微信公众号排版工~~具~~。问题或建议，请公众号留言。**[程序员翻身](#jump_8)**
@@ -274,7 +282,6 @@ Markdown Nice 这么好用，简直是{喜大普奔|hē hē hē hē}呀！
 
 
 `
-
   option: PreviewOption = new PreviewOption()
 
   aboutToAppear(): void {
@@ -283,7 +290,7 @@ Markdown Nice 这么好用，简直是{喜大普奔|hē hē hē hē}呀！
 
   build() {
     Scroll() {
-      MdPreview({ md: this.md ,previewOption: this.option})
+      MdPreview({ md: this.md, previewOption: this.option })
     }
     .padding(10)
     .height('100%')

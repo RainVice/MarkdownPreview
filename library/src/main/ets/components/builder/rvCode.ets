@@ -1,8 +1,7 @@
-import { LanguageParse } from '../../../../../Index'
 import { Tokens } from '../../marked'
 import { MdPreviewOption } from '../../option'
 import { CodeAttr } from '../../style'
-import { LanguageToken } from '../../utils'
+import { LanguageParse, LanguageToken } from '../../utils'
 
 @Component
 export struct rvCode {
@@ -10,9 +9,8 @@ export struct rvCode {
   private attr: CodeAttr = MdPreviewOption.value.codeAttr
   private parse: LanguageParse | undefined = undefined
 
-
   aboutToAppear(): void {
-    this.parse = LanguageParse.getLanguageParse(this.code?.lang)
+    this.parse = MdPreviewOption.value.getLanguageParse(this.code!.lang!.toUpperCase())
   }
 
   build() {
@@ -30,19 +28,28 @@ export struct rvCode {
       .padding(10)
       .width("100%")
 
+
+      // todo 代码预览
       Scroll() {
-        if (this.code?.lang){
-          ForEach(this.parse?.parseCode(this.code?.text), (tokens: LanguageToken[], index: number) => {
-            ForEach(tokens,(item: LanguageToken) => {
-              Span(item.value)
-                .fontColor(this.parse?.color[item.type])
+        Row() {
+          if (this.code?.lang) {
+
+            ForEach(this.parse?.parseCode(this.code?.text), (tokens: LanguageToken[], index: number) => {
+              Column() {
+                Text(index.toString())
+              }
+
+              Text() {
+                ForEach(tokens, (item: LanguageToken) => {
+                  Span(item.value)
+                    .fontColor(this.parse?.color[item.type])
+                })
+              }
             })
-          })
-        }else{
-          Text(this.code?.text)
-            .fontColor(this.attr.codeTextColor)
-            .fontSize(this.attr.codeTextSize)
+          }
         }
+        .justifyContent(FlexAlign.Start)
+
       }
       .align(Alignment.Start)
       .width("100%")

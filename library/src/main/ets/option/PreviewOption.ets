@@ -1,7 +1,16 @@
-import { BlockquoteAttr, CodeAttr,
+import {
+  BlockquoteAttr,
+  CodeAttr,
   EmphasizeAttr,
-  DividerAttr, FontAttr, ImageAttr, LinkAttr, ListAttr, TableAttr } from '../style'
+  DividerAttr,
+  FontAttr,
+  ImageAttr,
+  LinkAttr,
+  ListAttr,
+  TableAttr
+} from '../style'
 import { CodeSpanAttr } from '../style/CodeSpanAttr'
+import { DefaultParse, JavaParse, LanguageParse } from '../utils'
 
 export class PreviewOption {
   blockquoteAttr: BlockquoteAttr = new BlockquoteAttr()
@@ -22,6 +31,18 @@ export class PreviewOption {
   codeAttr: CodeAttr = new CodeAttr()
   emphasizeAttr: EmphasizeAttr = new EmphasizeAttr()
   codeSpanAttr: CodeSpanAttr = new CodeSpanAttr()
+  private languageParses: Record<string, LanguageParse> = {
+    "JAVA": new JavaParse(),
+    "DEFAULT": new DefaultParse()
+  }
+
+  setLanguageParse(languageParse: LanguageParse) {
+    this.languageParses[languageParse.language.toUpperCase()] = languageParse
+  }
+
+  getLanguageParse(language: string | undefined): LanguageParse | undefined {
+    return this.languageParses[language ? language.toUpperCase() : "DEFAULT"] || this.languageParses["DEFAULT"];
+  }
 }
 
 export class MdPreviewOption extends PreviewOption {
