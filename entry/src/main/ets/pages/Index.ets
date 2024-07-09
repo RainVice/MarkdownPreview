@@ -4,8 +4,6 @@ import { MdPreview, PreviewOption } from '@rv/markdown-preview';
 @Component
 struct Index {
   @State md: string = `
-<~custom~custom text with **bold**~custom~>
-
 
 \`\`\`
 bash
