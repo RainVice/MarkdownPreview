@@ -1,4 +1,4 @@
-import { Lexer, TokensList } from '../marked'
+import { marked, Tokens, TokensList } from '../marked/marked'
 import { MdPreviewOption, PreviewOption } from '../option'
 import { MdPreviewBuilder } from './builder/MdPreviewBuilder'
 
@@ -8,9 +8,36 @@ export struct MdPreview {
   @State private tokensList: TokensList | undefined = undefined
   previewOption: PreviewOption = new PreviewOption()
 
+
   aboutToAppear(): void {
-    this.tokensList = Lexer.lex(this.md)
+
+    this.previewOption.customParser.push({
+      builder: this.custom,
+      extension: {
+        name: 'custom',
+        level: 'inline',
+        tokenizer: (src: string) => {
+          const rule = /\<~custom~(.*?)~custom~\>/;
+          const match = rule.exec(src);
+          if (match) {
+            return {
+              type: 'custom',
+              raw: match[0],
+              text: match[1],
+              // tokens: marked.lexer(match[1]) // 如果需要解析子 tokens
+            };
+          }else{
+            return undefined
+          }
+        }
+      },
+    })
+
     MdPreviewOption.value = this.previewOption
+    marked.use({
+      extensions: MdPreviewOption.value.customParser.map(item => item.extension)
+    })
+    this.tokensList = marked.lexer(this.md)
   }
 
   build() {
@@ -20,4 +47,10 @@ export struct MdPreview {
       }
     }
   }
+
+  @Builder
+  custom(token: Tokens.Generic){
+    Span(token.text).fontColor(Color.Orange)
+  }
+
 }

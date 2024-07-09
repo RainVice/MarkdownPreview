@@ -831,8 +831,7 @@ export class _Tokenizer {
           }
         ]
       };
-    }
-    else if(cap && cap[4]){
+    } else if (cap && cap[4]) {
       return {
         type: 'link',
         raw: cap[0],

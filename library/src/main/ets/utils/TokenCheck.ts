@@ -1,4 +1,4 @@
-import { Tokens, Token } from '../marked';
+import { Tokens, Token } from '../marked/marked';
 
 export function isHeading(token: Token): token is Tokens.Heading {
   return token.type === 'heading'

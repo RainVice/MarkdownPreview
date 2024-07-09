@@ -17,7 +17,10 @@ export class _Lexer {
   };
 
   private tokenizer: _Tokenizer;
-  private inlineQueue: {src: string, tokens: Token[]}[];
+  private inlineQueue: {
+    src: string,
+    tokens: Token[]
+  }[];
 
   constructor(options?: MarkedOptions) {
     // TokenList cannot be created in one go
@@ -100,7 +103,9 @@ export class _Lexer {
    * Lexing
    */
   blockTokens(src: string, tokens?: Token[], lastParagraphClipped?: boolean): Token[];
+
   blockTokens(src: string, tokens?: TokensList, lastParagraphClipped?: boolean): TokensList;
+
   blockTokens(src: string, tokens: Token[] = [], lastParagraphClipped = false) {
     if (this.options.pedantic) {
       src = src.replace(/\t/g, '    ').replace(/^ +$/gm, '');
@@ -118,13 +123,13 @@ export class _Lexer {
       if (this.options.extensions
         && this.options.extensions.block
         && this.options.extensions.block.some((extTokenizer: TokenizerExtension['tokenizer']) => {
-          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token.raw.length);
-            tokens.push(token);
-            return true;
-          }
-          return false;
-        })) {
+        if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
+          return true;
+        }
+        return false;
+      })) {
         continue;
       }
 
@@ -238,7 +243,9 @@ export class _Lexer {
         let tempStart;
         this.options.extensions.startBlock.forEach((getStartIndex) => {
           tempStart = getStartIndex.call({ lexer: this }, tempSrc);
-          if (typeof tempStart === 'number' && tempStart >= 0) { startIndex = Math.min(startIndex, tempStart); }
+          if (typeof tempStart === 'number' && tempStart >= 0) {
+            startIndex = Math.min(startIndex, tempStart);
+          }
         });
         if (startIndex < Infinity && startIndex >= 0) {
           cutSrc = src.substring(0, startIndex + 1);
@@ -276,12 +283,7 @@ export class _Lexer {
 
       if (src) {
         const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
-        if (this.options.silent) {
-          console.error(errMsg);
-          break;
-        } else {
-          throw new Error(errMsg);
-        }
+        throw new Error(errMsg);
       }
     }
 
@@ -311,19 +313,22 @@ export class _Lexer {
       if (links.length > 0) {
         while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
           if (links.includes(match[0].slice(match[0].lastIndexOf('[') + 1, -1))) {
-            maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
+            maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' +
+            maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
           }
         }
       }
     }
     // Mask out other blocks
     while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+      maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' +
+      maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
     }
 
     // Mask out escaped characters
     while ((match = this.tokenizer.rules.inline.anyPunctuation.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index) + '++' + maskedSrc.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);
+      maskedSrc =
+        maskedSrc.slice(0, match.index) + '++' + maskedSrc.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);
     }
 
     while (src) {
@@ -336,13 +341,13 @@ export class _Lexer {
       if (this.options.extensions
         && this.options.extensions.inline
         && this.options.extensions.inline.some((extTokenizer) => {
-          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token.raw.length);
-            tokens.push(token);
-            return true;
-          }
-          return false;
-        })) {
+        if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
+          return true;
+        }
+        return false;
+      })) {
         continue;
       }
 
@@ -437,7 +442,9 @@ export class _Lexer {
         let tempStart;
         this.options.extensions.startInline.forEach((getStartIndex) => {
           tempStart = getStartIndex.call({ lexer: this }, tempSrc);
-          if (typeof tempStart === 'number' && tempStart >= 0) { startIndex = Math.min(startIndex, tempStart); }
+          if (typeof tempStart === 'number' && tempStart >= 0) {
+            startIndex = Math.min(startIndex, tempStart);
+          }
         });
         if (startIndex < Infinity && startIndex >= 0) {
           cutSrc = src.substring(0, startIndex + 1);
@@ -461,12 +468,9 @@ export class _Lexer {
 
       if (src) {
         const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
-        if (this.options.silent) {
-          console.error(errMsg);
-          break;
-        } else {
-          throw new Error(errMsg);
-        }
+
+        throw new Error(errMsg);
+
       }
     }
 

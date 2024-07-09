@@ -1,3 +1,4 @@
+import { TokenizerExtension, Tokens } from '../marked/marked'
 import {
   BlockquoteAttr,
   CodeAttr,
@@ -10,7 +11,6 @@ import {
   TableAttr
 } from '../style'
 import { CodeSpanAttr } from '../style/CodeSpanAttr'
-import { DefaultParse, JavaParse, LanguageParse } from '../utils'
 
 export class PreviewOption {
   blockquoteAttr: BlockquoteAttr = new BlockquoteAttr()
@@ -31,6 +31,18 @@ export class PreviewOption {
   codeAttr: CodeAttr = new CodeAttr()
   emphasizeAttr: EmphasizeAttr = new EmphasizeAttr()
   codeSpanAttr: CodeSpanAttr = new CodeSpanAttr()
+
+  // 自定义解析
+  customParser: MdPreviewParser[] = []
+
+}
+
+/**
+ * 自定义解析类
+ */
+export interface MdPreviewParser {
+  extension: TokenizerExtension
+  builder: (token: Tokens.Generic) => void
 }
 
 export class MdPreviewOption extends PreviewOption {

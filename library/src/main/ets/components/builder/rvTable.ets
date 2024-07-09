@@ -1,4 +1,4 @@
-import { Tokens } from '../../marked'
+import { Tokens } from '../../marked/marked'
 import { MdPreviewOption } from '../../option'
 import { TableAttr } from '../../style'
 import { rvInLine } from './rvInLine'

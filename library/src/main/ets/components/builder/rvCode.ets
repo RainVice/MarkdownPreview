@@ -1,7 +1,7 @@
-import { Tokens } from '../../marked'
+import { Tokens } from '../../marked/marked'
 import { MdPreviewOption } from '../../option'
 import { CodeAttr } from '../../style'
-import { LanguageParse, LanguageToken } from '../../utils'
+import { LanguageToken } from '../../utils'
 
 @Component
 export struct rvCode {

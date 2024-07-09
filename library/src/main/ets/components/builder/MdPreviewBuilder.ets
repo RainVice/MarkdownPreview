@@ -1,4 +1,4 @@
-import { Token, TokensList } from '../../marked'
+import { Token, Tokens, TokensList } from '../../marked/marked'
 import { isBlockquote, isHeading, isHr, isParagraph, isCode, isList, isTable } from '../../utils'
 import { rvBlockquote } from './rvBlockquote'
 import { rvCode } from './rvCode'
@@ -8,6 +8,8 @@ import { rvList } from './rvList'
 import { rvParagraph } from './rvParagraph'
 import { rvTable } from './rvTable'
 import { promptAction } from '@kit.ArkUI'
+import { MdPreviewOption } from '../../option'
+import { EmptyBuild } from '../EmptyBuild'
 
 @Component
 export struct MdPreviewBuilder {
@@ -15,6 +17,8 @@ export struct MdPreviewBuilder {
   tokensList: TokensList | undefined = undefined
   // 列表层级
   listLevel: number[] = []
+  // 自定义token
+  @BuilderParam private customBuilder: ((token: Tokens.Generic) => void) = EmptyBuild
 
   build() {
     Column({ space: 10 }) {
@@ -33,6 +37,12 @@ export struct MdPreviewBuilder {
           rvList({ list: item, listLevel: this.listLevel })
         } else if (isTable(item)) {
           rvTable({ table: item })
+        } else {
+          if (this.customBuilder =
+            MdPreviewOption.value.customParser.find(mdParse => mdParse.extension.name === item.type)?.builder ||
+              EmptyBuild) {
+            this.customBuilder(item)
+          }
         }
       })
       if (this.tokensList!['links']) {

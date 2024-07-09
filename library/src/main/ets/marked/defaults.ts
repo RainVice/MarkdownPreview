@@ -8,9 +8,10 @@ export function _getDefaults(): MarkedOptions {
     breaks: false,
     extensions: null,
     gfm: true,
+    hooks: null,
     pedantic: false,
-    silent: false,
     tokenizer: null,
+    walkTokens: null
   };
 }
 

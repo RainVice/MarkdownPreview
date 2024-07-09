@@ -1,9 +1,10 @@
-import { Token } from '../../marked'
+import { Token, Tokens } from '../../marked/marked'
 import { updateObj } from '../../utils'
 import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr, isEscape } from '../../utils'
 import { FontAttr, ImageAttr, LinkAttr } from '../../style'
 import { decodeHtmlEntities } from '../../utils'
 import { MdPreviewOption } from '../../option'
+import { EmptyBuild } from '../EmptyBuild'
 
 @Component
 export struct rvInLine {
@@ -11,6 +12,7 @@ export struct rvInLine {
   fontStyle: FontAttr = {}
   private imageAttr: ImageAttr = MdPreviewOption.value.imageAttr
   private linkAttr: LinkAttr = MdPreviewOption.value.linkAttr
+  @BuilderParam private customBuilder: ((token: Tokens.Generic) => void) = EmptyBuild
 
   build() {
     Text() {
@@ -40,20 +42,25 @@ export struct rvInLine {
             .fontColor([this.linkAttr.symbolColor])
             .onClick(link ? (clickEvent: ClickEvent) => event(clickEvent, link) : null)
         }
-      } else if (isEm(item)) {
+      }
+      else if (isEm(item)) {
         this.inLine(item.tokens, updateObj(style, { style: FontStyle.Italic }))
-      } else if (isStrong(item)) {
+      }
+      else if (isStrong(item)) {
         this.inLine(item.tokens, updateObj(style, { weight: FontWeight.Bold }))
-      } else if (isDel(item)) {
+      }
+      else if (isDel(item)) {
         this.inLine(item.tokens, style,
           { type: TextDecorationType.LineThrough, color: MdPreviewOption.value.emphasizeAttr.delLineColor })
-      } else if (isCodespan(item)) {
+      }
+      else if (isCodespan(item)) {
         Span(decodeHtmlEntities(MdPreviewOption.value.codeSpanAttr.previewStrategy(item.text)))
           .textBackgroundStyle(MdPreviewOption.value.codeSpanAttr.textBackgroundStyle)
           .font(style)// .decoration(decoration)
           .fontColor(MdPreviewOption.value.codeSpanAttr.fontStyle.color)
           .onClick((clickEvent: ClickEvent) => MdPreviewOption.value.codeSpanAttr.onClick(clickEvent, item.text))
-      } else if (isImage(item)) {
+      }
+      else if (isImage(item)) {
         if (link) {
           SymbolSpan($r('sys.symbol.share'))
             .fontSize(this.imageAttr.titleSize)
@@ -74,7 +81,8 @@ export struct rvInLine {
         ImageSpan(item.href).width("100%")
           .border(this.imageAttr.border)
           .onClick((event: ClickEvent) => this.imageAttr.onClick(event, item.href))
-      } else if (isLink(item)) {
+      }
+      else if (isLink(item)) {
         this.inLine(item.tokens, updateObj(style, { color: this.linkAttr.color }), {
           color: this.linkAttr.decorationColor,
           type: this.linkAttr.showDecoration ? TextDecorationType.Underline : TextDecorationType.None
@@ -82,19 +90,23 @@ export struct rvInLine {
           item.href,
           this.linkAttr.onClick
         )
-      } else if (isBr(item)) {
+      }
+      else if (isBr(item)) {
         Span('\n')
-      } else if (isEscape(item)) {
+      }
+      else if (isEscape(item)) {
         Span(decodeHtmlEntities(item.text))
           .font(style)
           .decoration(decoration)
           .fontColor(style.color)
       }
+      else {
+        if (this.customBuilder =
+          MdPreviewOption.value.customParser.find(mdParse => mdParse.extension.name === item.type)?.builder ||
+            EmptyBuild) {
+          this.customBuilder(item)
+        }
+      }
     })
   }
-}
-
-enum TextType {
-  Normal,
-  Link,
 }

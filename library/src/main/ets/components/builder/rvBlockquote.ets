@@ -1,4 +1,4 @@
-import { Tokens, TokensList } from '../../marked'
+import { Tokens, TokensList } from '../../marked/marked'
 import { MdPreviewOption } from '../../option/PreviewOption'
 import { BlockquoteAttr } from '../../style'
 import { MdPreviewBuilder } from './MdPreviewBuilder'
