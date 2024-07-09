@@ -1,10 +1,11 @@
 import { Token, Tokens } from '../../marked/marked'
 import { updateObj } from '../../utils'
-import { isCodespan, isDel, isEm, isImage, isLink, isStrong, isText, isBr, isEscape } from '../../utils'
+import { isCodespan, isEmoji, isDel, isEm, isImage, isLink, isStrong, isText, isBr, isEscape } from '../../utils'
 import { FontAttr, ImageAttr, LinkAttr } from '../../style'
 import { decodeHtmlEntities } from '../../utils'
 import { MdPreviewOption } from '../../option'
 import { EmptyBuild } from '../EmptyBuild'
+import emoji from '../../utils/emoji'
 
 @Component
 export struct rvInLine {
@@ -99,6 +100,9 @@ export struct rvInLine {
           .font(style)
           .decoration(decoration)
           .fontColor(style.color)
+      }
+      else if (isEmoji(item)) {
+        Span(emoji[item.text])
       }
       else {
         if (this.customBuilder =

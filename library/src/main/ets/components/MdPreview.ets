@@ -14,6 +14,7 @@ export struct MdPreview {
       extensions: MdPreviewOption.value.customParser.map(item => item.extension)
     })
     this.tokensList = marked.lexer(this.md)
+    return
   }
 
   build() {

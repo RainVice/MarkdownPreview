@@ -63,3 +63,12 @@ export function isTable(token: Token): token is Tokens.Table {
 export function isEscape(token: Token): token is Tokens.Escape {
   return token.type === "escape"
 }
+
+export function isSpace(token: Token): token is Tokens.Space {
+  return token.type === "space"
+}
+
+
+export function isEmoji(token: Token): token is Tokens.Emoji {
+  return token.type === "emoji"
+}

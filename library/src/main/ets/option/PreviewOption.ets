@@ -11,6 +11,8 @@ import {
   TableAttr
 } from '../style'
 import { CodeSpanAttr } from '../style/CodeSpanAttr'
+import emoji from '../utils/emoji'
+import { textSpan } from './InLineComp'
 
 export class PreviewOption {
   blockquoteAttr: BlockquoteAttr = new BlockquoteAttr()
@@ -31,10 +33,8 @@ export class PreviewOption {
   codeAttr: CodeAttr = new CodeAttr()
   emphasizeAttr: EmphasizeAttr = new EmphasizeAttr()
   codeSpanAttr: CodeSpanAttr = new CodeSpanAttr()
-
   // 自定义解析
   customParser: MdPreviewParser[] = []
-
 }
 
 /**

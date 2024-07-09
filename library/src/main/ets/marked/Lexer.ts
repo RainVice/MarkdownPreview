@@ -433,6 +433,13 @@ export class _Lexer {
         continue;
       }
 
+      // emoji
+      if(token = this.tokenizer.emoji(src)){
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      }
+
       // text
       // prevent inlineText consuming extensions by clipping 'src' to extension start
       cutSrc = src;

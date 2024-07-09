@@ -21,7 +21,8 @@ Tokens.Space
   | Tokens.Em
   | Tokens.Codespan
   | Tokens.Br
-  | Tokens.Del);
+  | Tokens.Del
+  | Tokens.Emoji);
 
 export type Token = (
 MarkedToken
@@ -197,6 +198,12 @@ export namespace Tokens {
     raw: string;
     text: string;
     tokens: Token[];
+  }
+
+  export interface Emoji {
+    type: 'emoji';
+    raw: string;
+    text: string;
   }
 
   export interface Generic {

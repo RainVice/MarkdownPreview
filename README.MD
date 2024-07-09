@@ -1,10 +1,11 @@
 即将实现功能：
 
-- 自定义语法解析
+
 
 已实现功能：
 
-- 代码高亮
+- 自定义语法解析
+- 自定义代码高亮
 - 增加自定义预览样式选项
 
 已实现预览：
@@ -25,12 +26,12 @@
 - [删除线](https://markdown.com.cn/extended-syntax/footnotes.html)
 - [任务列表](https://markdown.com.cn/extended-syntax/task-lists.html)
 - [自动网址链接](https://markdown.com.cn/extended-syntax/automatic-url-linking.html)
+- [使用 Emoji 表情](https://markdown.com.cn/extended-syntax/emoji.html)
 
 暂未实现预览：
 
 - [内嵌 HTML 标签](https://markdown.com.cn/basic-syntax/htmls.html)
 - [标题编号](https://markdown.com.cn/extended-syntax/heading-ids.html)
-- [使用 Emoji 表情](https://markdown.com.cn/extended-syntax/emoji.html)
 - 数学公式
 - 其他欢迎补充
 

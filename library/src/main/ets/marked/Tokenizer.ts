@@ -96,8 +96,7 @@ export class _Tokenizer {
           ? rtrim(text, '\n')
           : text
       };
-    }
-    else if (cap && cap[3]) {
+    } else if (cap && cap[3]) {
       const sub = /^ {0,3}([`~]{3})(.*?)\n([\s\S]*?)\1/.exec(cap[0])
       return {
         type: 'code',
@@ -845,6 +844,17 @@ export class _Tokenizer {
           }
         ]
       };
+    }
+  }
+
+  emoji(src: string): Tokens.Emoji | undefined {
+    const cap = this.rules.inline.emoji.exec(src);
+    if (cap) {
+      return {
+        type: 'emoji',
+        raw: cap[0],
+        text: cap[1]
+      }
     }
   }
 

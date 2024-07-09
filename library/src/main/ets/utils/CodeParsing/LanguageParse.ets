@@ -1,6 +1,5 @@
 import { LanguageRules, ParseRule, TokenType } from './Rules'
 
-
 export abstract class LanguageParse {
   public abstract readonly language: string
   protected abstract rules: LanguageRules
@@ -60,7 +59,8 @@ export abstract class LanguageParse {
     const regexResult = rule.regex.exec(line)
     if (regexResult) {
       return rule.operation(regexResult)
-    } else {
+    }
+    else {
       return undefined
     }
   }
