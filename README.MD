@@ -1,11 +1,34 @@
+# MarkdownPreview
+
+MarkdownPreview是基于ArkUI的一款轻量级Markdown预览工具，支持设置样式，自定义语法解析，自定义代码高亮规则等
+
+## 快熟开始
+
+1. 安装依赖
+   `ohpm i @rv/markdown-preview`
+2. 引入组件
+   ```typescript
+   import { MdPreview, PreviewOption } from '@rv/markdown-preview';
+   ```
+3. 在需要的界面使用
+   ```typescript
+   MdPreview({ md: markdown文本 })
+   ```
+
+## 预览选项
+
+通过 `PreviewOption` 来设置
+
+## 功能实现
+
 即将实现功能：
 
-
+- 欢迎提出建议
 
 已实现功能：
 
-- 自定义语法解析
-- 自定义代码高亮
+- **自定义语法解析**
+- **自定义代码高亮**
 - 增加自定义预览样式选项
 
 已实现预览：
@@ -39,3 +62,5 @@
 
 - [脚注](https://markdown.com.cn/extended-syntax/footnotes.html)
 - [定义列表](https://markdown.com.cn/extended-syntax/definition-lists.html)
+
+

@@ -25,19 +25,26 @@ export struct MdPreviewBuilder {
       ForEach(this.tokensList, (item: Token) => {
         if (isHeading(item)) {
           rvHeading({ heading: item })
-        } else if (isParagraph(item)) {
+        }
+        else if (isParagraph(item)) {
           rvParagraph({ paragraph: item })
-        } else if (isHr(item)) {
+        }
+        else if (isHr(item)) {
           rvHr()
-        } else if (isBlockquote(item)) {
+        }
+        else if (isBlockquote(item)) {
           rvBlockquote({ blockquote: item })
-        } else if (isCode(item)) {
+        }
+        else if (isCode(item)) {
           rvCode({ code: item })
-        } else if (isList(item)) {
+        }
+        else if (isList(item)) {
           rvList({ list: item, listLevel: this.listLevel })
-        } else if (isTable(item)) {
+        }
+        else if (isTable(item)) {
           rvTable({ table: item })
-        } else {
+        }
+        else {
           if (this.customBuilder =
             MdPreviewOption.value.customParser.find(mdParse => mdParse.extension.name === item.type)?.builder ||
               EmptyBuild) {
@@ -45,18 +52,18 @@ export struct MdPreviewBuilder {
           }
         }
       })
-      if (this.tokensList!['links']) {
+      if (this.tokensList!['links'] && Object.keys(this.tokensList!['links']).length > 0 ) {
+        Text("参考资料").fontWeight(FontWeight.Medium).fontSize(20)
         ForEach(Object.keys(this.tokensList!['links']), (item: string) => {
           Text() {
-            Span(`[ ${item} ]: `)
-              .fontWeight(FontWeight.Bolder)
+            Span(`[ ${item} ]: `).fontColor(Color.Gray)
             Span(`${this.tokensList!['links'][item].href}`)
               .fontColor("#5C5C5C")
               .decoration({ type: TextDecorationType.Underline })
               .onClick(() => {
                 promptAction.showToast({ message: "超链接" })
               })
-            Span(` ${this.tokensList!['links'][item].title}`)
+            Span(` ${this.tokensList!['links'][item].title || ""}`)
           }
         })
       }

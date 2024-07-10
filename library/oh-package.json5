@@ -1,9 +1,11 @@
 {
   "name": "@rv/markdown-preview",
   "version": "1.0.0",
-  "description": "Please describe the basic information.",
+  "keywords": ["markdown", "preview","预览"],
+  "description": "MarkdownPreview是基于ArkUI的一款轻量级Markdown预览工具，支持设置样式，自定义语法解析，自定义代码高亮规则等",
   "main": "Index.ets",
-  "author": "",
+  "author": "rainvice",
   "license": "Apache-2.0",
+  "repository": "https://gitee.com/MUYS/markdown-preview",
   "dependencies": {}
 }
