@@ -68,7 +68,6 @@ export struct MdPreviewBuilder {
         })
       }
     }
-    .width("100%")
     .alignItems(HorizontalAlign.Start)
   }
 }

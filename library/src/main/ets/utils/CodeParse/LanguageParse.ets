@@ -7,14 +7,14 @@ export class LanguageParse {
    * 默认颜色
    */
   private static defaultColor: ResourceColor = "#DAF2F8"
-  private static languageExtension: LanguageExtension = defaultParse
+  private static languageExtension: LanguageExtension = defaultParse()
 
   setDefaultColor(color: ResourceColor) {
     LanguageParse.defaultColor = color
   }
 
   static registerLanguage(language: string, rule: LanguageRule[]) {
-    LanguageParse.languageExtension[language] = rule
+    LanguageParse.languageExtension[language.toUpperCase()] = rule
   }
 
   static getCodeTokens(code: string, language: string): CodeToken[][] {

@@ -30,6 +30,11 @@ export class CodeAttr {
    */
   lineNumberColor: ResourceColor = "#9A9EA3"
 
+  /**
+   * 注册语言解析规则
+   * @param language 语言类型
+   * @param rule 解析规则
+   */
   registerLanguage(language: string, rule: LanguageRule[]) {
     LanguageParse.registerLanguage(language, rule)
   }

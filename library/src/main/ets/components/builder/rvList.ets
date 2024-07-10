@@ -17,7 +17,7 @@ export struct rvList {
       } else {
         this.unOrderList()
       }
-    }
+    }.width("100%")
   }
 
   @Builder
@@ -30,7 +30,9 @@ export struct rvList {
           tokensList: item.tokens as TokensList,
           listLevel: this.listLevel.concat(index),
         })
+          .layoutWeight(1)
       }
+      .width("100%")
       .alignItems(VerticalAlign.Top)
     })
   }

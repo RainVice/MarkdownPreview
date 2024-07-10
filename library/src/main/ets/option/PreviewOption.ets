@@ -11,8 +11,6 @@ import {
   TableAttr
 } from '../style'
 import { CodeSpanAttr } from '../style/CodeSpanAttr'
-import emoji from '../utils/emoji'
-import { textSpan } from './InLineComp'
 
 export class PreviewOption {
   blockquoteAttr: BlockquoteAttr = new BlockquoteAttr()

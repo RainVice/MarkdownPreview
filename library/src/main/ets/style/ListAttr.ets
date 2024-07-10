@@ -4,14 +4,14 @@ export class ListAttr {
    * @param orderNums 祖先列表序号数组，数组长度代表层级
    * @returns 生成的序号
    */
-  orderStrategy: (orderNums: number[]) => ResourceStr =
+  orderStrategy: (orderNums: number[]) => string =
     (orderNums: number[]) => orderNums.map(num => num + 1).join(".");
   /**
    * 无序列表序号生成策略
    * @param unOrderNums 祖先列表序号数组,数组长度代表层级
    * @returns 生成的序号
    */
-  unOrderStrategy: (unOrderNums: number[]) => ResourceStr = () => "•"
+  unOrderStrategy: (unOrderNums: number[]) => string = () => "•"
   /**
    * 列表序号与段落之间的间距
    */

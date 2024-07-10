@@ -21,7 +21,7 @@ export struct MdPreview {
     if (this.tokensList) {
       Column() {
         MdPreviewBuilder({ tokensList: this.tokensList })
-      }
+      }.width("100%")
     }
   }
 }

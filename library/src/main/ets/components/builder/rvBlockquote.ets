@@ -13,8 +13,9 @@ export struct rvBlockquote {
     Column(){
       MdPreviewBuilder({tokensList: this.blockquote?.tokens as TokensList})
     }
-    .backgroundColor(this.attr.backgroundColor)
     .width("100%")
+    .alignItems(HorizontalAlign.Start)
+    .backgroundColor(this.attr.backgroundColor)
     .padding(this.attr.padding)
     .borderWidth({left: this.attr.borderWidth})
     .borderColor(this.attr.borderColor)
