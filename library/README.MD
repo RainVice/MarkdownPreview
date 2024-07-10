@@ -196,7 +196,7 @@ registerLanguage: (language: string, rule: LanguageRule[]) => void
 1. extension： 解析器扩展，实现自定义解析器
 
    | 名称          | 类型                                                            | 必须 | 说明                           |
-         |-------------|---------------------------------------------------------------|----|------------------------------|
+      |-------------|---------------------------------------------------------------|----|------------------------------|
    | name        | string                                                        | 是  | 解析的代码块名字                     |
    | level       | 'block' \| 'inline'                                           | 是  | 解析的层级：block：块级，inline：行级     |
    | start       | (line: string) => index                                       | 否  | 解析可能开始的位置，防止被别的解析覆盖，行级模式建议配置 |
@@ -222,20 +222,20 @@ option: PreviewOption = new PreviewOption()
 
 // 将引用块边框改为红色，宽度为10
 aboutToAppear():void {
-   this.option.blockquoteAttr.borderColor = Color.Red
-   this.option.blockquoteAttr.borderWidth = 10
+  this.option.blockquoteAttr.borderColor = Color.Red
+  this.option.blockquoteAttr.borderWidth = 10
 }
 
 build()
 {
-   Scroll()
-   {
-      // 调用预览器
-      MdPreview({ md: this.md, previewOption: this.option })
-   }
-   .padding(10)
-   .height('100%')
-   .width('100%')
+  Scroll()
+  {
+    // 调用预览器
+    MdPreview({ md: this.md, previewOption: this.option })
+  }
+    .padding(10)
+    .height('100%')
+    .width('100%')
 }
 ```
 
@@ -307,8 +307,8 @@ import { MdPreview, PreviewOption } from '@rv/markdown-preview'
 @Component
 struct Index
 {
-   @State
-   md: string = `\`\`\`ArkTS
+  @State
+  md: string = `\`\`\`ArkTS
 // 注释
 build() {
   Scroll() {
@@ -320,110 +320,110 @@ build() {
 }
 \`\`\`
 `
-   option: PreviewOption = new PreviewOption()
+  option: PreviewOption = new PreviewOption()
 
-   aboutToAppear():void {
-   this.option.codeAttr.registerLanguage("ArkTS",[{
-   parsing: (src: string) => {
+  aboutToAppear():void {
+    this.option.codeAttr.registerLanguage("ArkTS",[{
+    parsing: (src: string) => {
       const regex =
-         /^\b(?:this)\b/
+        /^\b(?:this)\b/
       const match = regex.exec(src)
       if (match) {
-         return { value: match[0], color: "#E1D984" }
+        return { value: match[0], color: "#E1D984" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // keyword
-{
-   parsing: (src: string) => {
+    }
+  }, // keyword
+  {
+    parsing: (src: string) => {
       const regex = /^ *\/\/.*|^\/\*\*?[\s\S]*?\*\//
       const match = regex.exec(src)
       if (match) {
-         return { value: match[0], color: "#808080" }
+        return { value: match[0], color: "#808080" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // comment
-{
-   parsing: (src: string) => {
+    }
+  }, // comment
+  {
+    parsing: (src: string) => {
       const regex = /^\b([\S]+) *\([\s\S]*\) *\{[\s\S]*/
       const match = regex.exec(src)
       if (match) {
-         return { value: match[1], color: "#619061" }
+        return { value: match[1], color: "#619061" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // method
-{
-   parsing: (src: string) => {
+    }
+  }, // method
+  {
+    parsing: (src: string) => {
       const regex = /^(["']).*?\1/
       const match = regex.exec(src)
       if (match) {
-         return { value: match[0], color: "#A96989" }
+        return { value: match[0], color: "#A96989" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // string
-{
-   parsing(src: string) {
+    }
+  }, // string
+  {
+    parsing(src: string) {
       const regex = /^\b(.*)\b\(.*\)/
       const match = regex.exec(src)
       if (match) {
-         return { value: match[1], color: "#ffff9a00" }
+        return { value: match[1], color: "#ffff9a00" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // attribute
-{
-   parsing: (src: string) => {
+    }
+  }, // attribute
+  {
+    parsing: (src: string) => {
       const regex = /^\b0x[\da-f]+\b|^\b0b[01]+\b|^\b0o[0-7]+\b|^(?:\b\d+(?:\.\d*)?[dfl]?|^\B\.\d+)(?:e[+-]?\d+)?/i
       const match = regex.exec(src)
       if (match) {
-         return { value: match[0], color: "#7FDD44" }
+        return { value: match[0], color: "#7FDD44" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // number
-{
-   parsing: (src: string) => {
+    }
+  }, // number
+  {
+    parsing: (src: string) => {
       const regex = /^[\{\}\[\]\(\)]/
       const match = regex.exec(src)
       if (match) {
-         return { value: match[0], color: "#9d1731" }
+        return { value: match[0], color: "#9d1731" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-}, // block
-{
-   parsing(src: string) {
+    }
+  }, // block
+  {
+    parsing(src: string) {
       const regex = /^(\b[a-zA-Z0-9_]+\b) *:/
       const match = regex.exec(src)
       if (match) {
-         return { value: match[1], color: "#ffffc000" }
+        return { value: match[1], color: "#ffffc000" }
       } else {
-         return undefined
+        return undefined
       }
-   }
-} // variable
+    }
+  } // variable
    ])
 }
 
 build()
 {
-   Scroll()
-   {
-      MdPreview({ md: this.md, previewOption: this.option })
-   }
-   .padding(10)
-   .height('100%')
-   .width('100%')
+  Scroll()
+  {
+    MdPreview({ md: this.md, previewOption: this.option })
+  }
+  .padding(10)
+    .height('100%')
+    .width('100%')
 }
 }
 ```
