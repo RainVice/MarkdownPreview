@@ -1,4 +1,4 @@
-import { DefaultParse, JavaParse, LanguageParse } from '../utils'
+import { LanguageParse, LanguageRule } from '../utils'
 
 export class CodeAttr {
   /**
@@ -30,19 +30,7 @@ export class CodeAttr {
    */
   lineNumberColor: ResourceColor = "#9A9EA3"
 
-  // 代码高亮规则
-  private languageParses: Record<string, LanguageParse> = {
-    "JAVA": new JavaParse(),
-    "DEFAULT": new DefaultParse()
-  }
-
-  // 设置代码高亮
-  setLanguageParse(languageParse: LanguageParse) {
-    this.languageParses[languageParse.language.toUpperCase()] = languageParse
-  }
-
-  // 获取代码高亮规则
-  getLanguageParse(language: string | undefined): LanguageParse {
-    return this.languageParses[language ? language.toUpperCase() : "DEFAULT"] || this.languageParses["DEFAULT"];
+  registerLanguage(language: string, rule: LanguageRule[]) {
+    LanguageParse.registerLanguage(language, rule)
   }
 }

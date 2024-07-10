@@ -1,17 +1,16 @@
 import { Tokens } from '../../marked/marked'
 import { MdPreviewOption } from '../../option'
 import { CodeAttr } from '../../style'
-import { LanguageToken } from '../../utils'
+import { CodeToken, copyText, LanguageParse } from '../../utils'
 
 @Component
 export struct rvCode {
   code: Tokens.Code | undefined = undefined
   private attr: CodeAttr = MdPreviewOption.value.codeAttr
-  private tokens: LanguageToken[][] = []
+  private tokens: CodeToken[][] = []
 
   aboutToAppear(): void {
-    this.tokens =
-      MdPreviewOption.value.codeAttr.getLanguageParse(this.code!.lang!.toUpperCase()).parseCode(this.code!.text)
+    this.tokens = LanguageParse.getCodeTokens(this.code?.text || "", this.code?.lang || "")
   }
 
   build() {
@@ -24,6 +23,9 @@ export struct rvCode {
         Text("复制")
           .fontSize(this.attr.titleTextSize)
           .fontColor(this.attr.titleTextColor)
+          .onClick(() => {
+            copyText(this.code!.text)
+          })
       }
       .backgroundColor(this.attr.titleBackgroundColor)
       .padding(10)
@@ -32,25 +34,30 @@ export struct rvCode {
 
       Row() {
         Column() {
-          ForEach(this.tokens, (_token: LanguageToken[], index: number) => {
+          ForEach(this.tokens, (_token: CodeToken[], index: number) => {
             Text(index.toString())
               .fontSize(this.attr.codeTextSize)
               .fontColor(this.attr.lineNumberColor)
           })
         }
-        .padding({top: 10,bottom: 10,left: 5,right: 5})
+        .padding({
+          top: 10,
+          bottom: 10,
+          left: 5,
+          right: 5
+        })
         .backgroundColor(this.attr.codeBackgroundColor)
         .alignItems(HorizontalAlign.End)
         .border({
-          width: {right: 1},
+          width: { right: 1 },
           color: this.attr.lineNumberColor
         })
 
         Scroll() {
           Column() {
-            ForEach(this.tokens, (token: LanguageToken[]) => {
+            ForEach(this.tokens, (token: CodeToken[]) => {
               Text() {
-                ForEach(token, (item: LanguageToken) => {
+                ForEach(token, (item: CodeToken) => {
                   Span(item.value)
                     .fontColor(item.color)
                     .fontSize(this.attr.codeTextSize)

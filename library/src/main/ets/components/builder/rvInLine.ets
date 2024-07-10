@@ -62,6 +62,9 @@ export struct rvInLine {
           .onClick((clickEvent: ClickEvent) => MdPreviewOption.value.codeSpanAttr.onClick(clickEvent, item.text))
       }
       else if (isImage(item)) {
+        if (link || item.title || item.text) {
+          Span("\n")
+        }
         if (link) {
           SymbolSpan($r('sys.symbol.share'))
             .fontSize(this.imageAttr.titleSize)
