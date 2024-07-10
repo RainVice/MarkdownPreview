@@ -11,6 +11,7 @@ export struct rvCode {
 
   aboutToAppear(): void {
     this.tokens = LanguageParse.getCodeTokens(this.code?.text || "", this.code?.lang || "")
+    return
   }
 
   build() {

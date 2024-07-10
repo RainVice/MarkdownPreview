@@ -17,7 +17,7 @@ export struct rvList {
       } else {
         this.unOrderList()
       }
-    }.width("100%")
+    }
   }
 
   @Builder
@@ -32,7 +32,6 @@ export struct rvList {
         })
           .layoutWeight(1)
       }
-      .width("100%")
       .alignItems(VerticalAlign.Top)
     })
   }

@@ -2,17 +2,23 @@
 
 > 支持api11及以上版本
 
-MarkdownPreview是基于ArkUI的一款轻量级Markdown预览工具，支持设置样式，自定义语法解析，自定义代码高亮规则等
+MarkdownPreview是基于ArkUI的一款轻量级Markdown预览工具，支持设置样式，自定义语法解析，自定义代码高亮规则等。
+
+解析Markdown：修改自[marked](https://github.com/markedjs/marked)
+
+[查看预览效果](#演示)
 
 ## 快速开始
 
 1. 安装依赖
    `ohpm i @rv/markdown-preview`
 2. 引入组件
+
    ```typescript
    import { MdPreview, PreviewOption } from '@rv/markdown-preview';
    ```
 3. 在需要的界面使用
+
    ```typescript
    MdPreview({ md: markdown文本 })
    ```
@@ -190,7 +196,7 @@ registerLanguage: (language: string, rule: LanguageRule[]) => void
 1. extension： 解析器扩展，实现自定义解析器
 
    | 名称          | 类型                                                            | 必须 | 说明                           |
-   |-------------|---------------------------------------------------------------|----|------------------------------|
+      |-------------|---------------------------------------------------------------|----|------------------------------|
    | name        | string                                                        | 是  | 解析的代码块名字                     |
    | level       | 'block' \| 'inline'                                           | 是  | 解析的层级：block：块级，inline：行级     |
    | start       | (line: string) => index                                       | 否  | 解析可能开始的位置，防止被别的解析覆盖，行级模式建议配置 |
@@ -200,31 +206,54 @@ registerLanguage: (language: string, rule: LanguageRule[]) => void
 
    ！！！注意：builder函数中，当`level`的值为`inline`时，必须返回一个`Text`的可用子组件，否则会报错。
 
+## 演示
+
+![](./image/pre1.png)
+![](./image/pre2.png)
+![](./image/pre3.png)
+
 ## 功能演示
+
 ### 设置基础样式
+
 ```typescript
 // 定义预览选项
 option: PreviewOption = new PreviewOption()
 
 // 将引用块边框改为红色，宽度为10
-aboutToAppear(): void {
- this.option.blockquoteAttr.borderColor = Color.Red
- this.option.blockquoteAttr.borderWidth = 10
+aboutToAppear():
+void {
+  this
+  .
+  option
+  .
+  blockquoteAttr
+  .
+  borderColor = Color.Red
+  this
+  .
+  option
+  .
+  blockquoteAttr
+  .
+  borderWidth = 10
 }
 
-build() {
- Scroll() {
-   // 调用预览器
-   MdPreview({ md: this.md, previewOption: this.option })
- }
- .padding(10)
- .height('100%')
- .width('100%')
+build()
+{
+  Scroll()
+  {
+    // 调用预览器
+    MdPreview({ md: this.md, previewOption: this.option })
+  }
+  .
+  padding(10)
+    .height('100%')
+    .width('100%')
 }
 ```
 
-![自定义引用块样式](C:\Users\Rainvice\DevEcoStudioProjects\MarkdownPreview\image\1.png "自定义引用块样式")
-
+![自定义引用块样式](./image/1.png "自定义引用块样式")
 
 ### 自定义语法解析
 
@@ -233,14 +262,27 @@ build() {
 ```typescript
 import { MdPreview, PreviewOption, Tokens } from '@rv/markdown-preview';
 
-@Entry
-@Component
-struct Index {
-  @State md: string = `这是自定义  @markdown@ 语法解析示`
+@
+Entry
+@
+Component
+struct
+Index
+{
+  @
+  State
+  md: string = `这是自定义  @markdown@ 语法解析示`
   option: PreviewOption = new PreviewOption()
-  aboutToAppear(): void {
-    this.option.customParser.push({
-         // 设置解析方式
+  aboutToAppear():
+  void {
+    this
+    .
+    option
+    .
+    customParser
+    .
+    push({
+    // 设置解析方式
       extension: {
         name: 'test',
         level: 'inline',
@@ -253,39 +295,191 @@ struct Index {
               raw: match[0],
               text: match[1]
             }
-          }
-          else {
+          } else {
             return undefined
           }
         }
       },
-         // 设置解析后显示的组件
+    // 设置解析后显示的组件
       builder: this.test
     })
   }
-  
-  @Builder
-  test(token: Tokens.Generic) {
+
+  @
+  Builder
+  test(token:
+  Tokens.Generic
+  )
+  {
     // 行内解析的内容一定要为Text组件的可用子组件
     Span(token.text).fontColor(Color.Pink)
   }
-  build() {
-    Scroll() {
+  build()
+  {
+    Scroll()
+    {
       MdPreview({ md: this.md, previewOption: this.option })
     }
-    .padding(10)
-    .height('100%')
-    .width('100%')
+    .
+    padding(10)
+      .height('100%')
+      .width('100%')
   }
 }
 ```
-![img.png](./image/2.png)
 
+![img.png](./image/2.png)
 
 ### 自定义代码高亮
 
+```typescript
+import { MdPreview, PreviewOption } from '@rv/markdown-preview';
 
+@
+Entry
+@
+Component
+struct
+Index
+{
+  @
+  State
+  md: string = `\`\`\`ArkTS
+// 注释
+build() {
+  Scroll() {
+    MdPreview({ md: this.md, previewOption: this.option })
+  }
+  .padding(10)
+  .height('100%')
+  .width('100%')
+}
+\`\`\`
+`
+  option: PreviewOption = new PreviewOption()
 
+  aboutToAppear():
+  void {
+    this
+    .
+    option
+    .
+    codeAttr
+    .
+    registerLanguage
+    (
+    "ArkTS",
+    [
+
+    {
+    parsing: (src: string) => {
+      const regex =
+        /^\b(?:this)\b/
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[0], color: "#E1D984" }
+      } else {
+        return undefined
+      }
+    }
+  }, // keyword
+  {
+    parsing: (src: string) => {
+      const regex = /^ *\/\/.*|^\/\*\*?[\s\S]*?\*\//
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[0], color: "#808080" }
+      } else {
+        return undefined
+      }
+    }
+  }, // comment
+  {
+    parsing: (src: string) => {
+      const regex = /^\b([\S]+) *\([\s\S]*\) *\{[\s\S]*/
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[1], color: "#619061" }
+      } else {
+        return undefined
+      }
+    }
+  }, // method
+  {
+    parsing: (src: string) => {
+      const regex = /^(["']).*?\1/
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[0], color: "#A96989" }
+      } else {
+        return undefined
+      }
+    }
+  }, // string
+  {
+    parsing(src: string) {
+      const regex = /^\b(.*)\b\(.*\)/
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[1], color: "#ffff9a00" }
+      } else {
+        return undefined
+      }
+    }
+  }, // attribute
+  {
+    parsing: (src: string) => {
+      const regex = /^\b0x[\da-f]+\b|^\b0b[01]+\b|^\b0o[0-7]+\b|^(?:\b\d+(?:\.\d*)?[dfl]?|^\B\.\d+)(?:e[+-]?\d+)?/i
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[0], color: "#7FDD44" }
+      } else {
+        return undefined
+      }
+    }
+  }, // number
+  {
+    parsing: (src: string) => {
+      const regex = /^[\{\}\[\]\(\)]/
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[0], color: "#9d1731" }
+      } else {
+        return undefined
+      }
+    }
+  }, // block
+  {
+    parsing(src: string) {
+      const regex = /^(\b[a-zA-Z0-9_]+\b) *:/
+      const match = regex.exec(src)
+      if (match) {
+        return { value: match[1], color: "#ffffc000" }
+      } else {
+        return undefined
+      }
+    }
+  } // variable
+
+  ]
+  )
+}
+
+build()
+{
+  Scroll()
+  {
+    MdPreview({ md: this.md, previewOption: this.option })
+  }
+  .
+  padding(10)
+    .height('100%')
+    .width('100%')
+}
+}
+```
+
+![](./image/3.png)
 
 ## 功能实现
 

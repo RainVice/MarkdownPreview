@@ -42,7 +42,7 @@ export class LanguageParse {
       }
       if (line.length > 0 && !match) {
 
-        const match = /^\b.*\b/.exec(line)
+        const match = /^\b[a-zA-Z0-9_]+\b/.exec(line)
 
         tokens.push({ value: match ? match[0] : line[0], color: LanguageParse.defaultColor });
         line = line.substring(match ? match[0].length : 1)
